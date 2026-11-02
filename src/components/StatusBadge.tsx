@@ -4,45 +4,55 @@ interface StatusBadgeProps {
   status: 'GREEN' | 'AMBER' | 'RED' | string;
   size?: 'sm' | 'md' | 'lg';
   showLabel?: boolean;
+  lang?: 'en' | 'ta';
 }
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({
   status,
   size = 'md',
   showLabel = true,
+  lang = 'en',
 }) => {
   const upper = (status || 'GREEN').toUpperCase();
 
   const config = {
     GREEN: {
-      bg: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+      bg: 'bg-emerald-50/90 text-emerald-800 border-emerald-200/90 hover:bg-emerald-100/80',
       dot: 'bg-emerald-500',
+      ping: 'bg-emerald-400',
+      pulse: false,
       label: 'On Track',
       tamilLabel: 'சரியான நிலை',
     },
     AMBER: {
-      bg: 'bg-amber-50 text-amber-800 border-amber-200',
-      dot: 'bg-amber-500 animate-pulse',
+      bg: 'bg-amber-50/90 text-amber-800 border-amber-200/90 hover:bg-amber-100/80',
+      dot: 'bg-amber-500',
+      ping: 'bg-amber-400',
+      pulse: true,
       label: 'Delay Warning',
       tamilLabel: 'தாமத எச்சரிக்கை',
     },
     RED: {
-      bg: 'bg-rose-50 text-rose-800 border-rose-200',
-      dot: 'bg-rose-600 animate-ping',
+      bg: 'bg-rose-50/90 text-rose-800 border-rose-200/90 hover:bg-rose-100/80',
+      dot: 'bg-rose-600',
+      ping: 'bg-rose-400',
+      pulse: true,
       label: 'Critical Delay',
       tamilLabel: 'அபாய நிலை',
     },
   }[upper] || {
     bg: 'bg-slate-50 text-slate-700 border-slate-200',
     dot: 'bg-slate-400',
+    ping: 'bg-slate-300',
+    pulse: false,
     label: upper,
     tamilLabel: upper,
   };
 
   const sizeClasses = {
-    sm: 'text-xs px-2 py-0.5 gap-1.5',
-    md: 'text-xs px-2.5 py-1 gap-1.5 font-medium',
-    lg: 'text-sm px-3.5 py-1.5 gap-2 font-semibold',
+    sm: 'text-[11px] px-2 py-0.5 gap-1.5 font-medium',
+    md: 'text-xs px-2.5 py-1 gap-1.5 font-semibold',
+    lg: 'text-sm px-3.5 py-1.5 gap-2 font-bold',
   }[size];
 
   const dotSizes = {
@@ -53,10 +63,17 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center rounded-full border ${config.bg} ${sizeClasses} shadow-sm transition-all`}
+      className={`inline-flex items-center rounded-full border ${config.bg} ${sizeClasses} shadow-2xs transition-all backdrop-blur-xs select-none`}
     >
-      <span className={`rounded-full ${config.dot} ${dotSizes} flex-shrink-0`} />
-      {showLabel && <span>{config.label}</span>}
+      <span className={`relative flex ${dotSizes} flex-shrink-0`}>
+        {config.pulse && (
+          <span
+            className={`animate-ping absolute inline-flex h-full w-full rounded-full ${config.ping} opacity-75`}
+          />
+        )}
+        <span className={`relative inline-flex rounded-full ${dotSizes} ${config.dot}`} />
+      </span>
+      {showLabel && <span>{lang === 'ta' ? config.tamilLabel : config.label}</span>}
     </span>
   );
 };
