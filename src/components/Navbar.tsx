@@ -193,13 +193,19 @@ export const Navbar = () => {
               <span>{lang === 'en' ? 'தமிழ்' : 'English'}</span>
             </button>
 
-            {/* Login / Switch Account Link */}
+            {/* Login & Signup buttons */}
             <Link
               href="/login"
-              title="Sign In / Switch Accounts"
-              className="text-xs font-medium text-slate-600 hover:text-brand-600 p-1.5 rounded-lg hover:bg-slate-50 transition"
+              className="text-xs font-semibold px-2.5 py-1.5 rounded-lg text-slate-700 hover:text-brand-600 hover:bg-slate-50 transition"
             >
-              <ShieldCheck className="w-4 h-4 text-slate-500 hover:text-brand-600" />
+              Log In
+            </Link>
+
+            <Link
+              href="/signup"
+              className="text-xs font-bold px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition"
+            >
+              Sign Up
             </Link>
 
             {/* Reset to Sample Data */}
@@ -261,6 +267,23 @@ export const Navbar = () => {
                 </Link>
               );
             })}
+            
+            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 mt-2">
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-center py-2 px-3 rounded-lg border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50"
+              >
+                Log In
+              </Link>
+              <Link
+                href="/signup"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-center py-2 px-3 rounded-lg bg-brand-600 text-xs font-bold text-white hover:bg-brand-700"
+              >
+                Sign Up
+              </Link>
+            </div>
           </div>
 
           <div className="pt-2 border-t border-slate-200 flex items-center justify-between">

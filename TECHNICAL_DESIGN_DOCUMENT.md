@@ -270,7 +270,8 @@ The client brief mandates: *"The client values good, minimal design: clean layou
 
 | Screen | Target User | Key Design Decisions |
 |---|---|---|
-| **Authentication Center (`/login`)** | All Personas (Reviewers, Floor Staff, Sourcing Buyers) | 4-tab unified hub: 1-Click Evaluation Presets, JWT credential sign-in with rate limiting, Buyer PIN/Token direct access, and new factory employee self-service registration. Shows active user badge and instant logout. |
+| **Dedicated Login (`/login`)** | Factory Staff & International Buyers | Clean sign-in with 1-click reviewer evaluation presets, email/password JWT authentication, password peek toggle, remember-me session persistence, and overseas Buyer Access PIN lookup. |
+| **Dedicated Signup (`/signup` & `/register`)** | New Factory Supervisors & Merchandisers | Self-service registration with full name (Tamil/English), work email, role allocation (Merchandiser / Floor Supervisor), factory unit assignment (Unit 1, 2, 3 or Subcontract), and language preference. |
 | **Merchandiser Order Board (`/orders`)** | Office Merchandiser | Dense tabular view with high information ratio, visual status pills (Green/Amber/Red), immediate filters by Buyer, Unit, and Ship Week, real-time pace column, worst orders automatically sorted first. |
 | **Order Setup Wizard (`/orders/new`)** | Merchandiser | PO creation with color × size matrix, ex-factory target, and automated backward TNA milestone calculation from industry templates. |
 | **Order Deep-Dive (`/orders/[id]`)** | Merchandiser & Floor Manager | Interactive "Show Formula Maths" accordion exposing step-by-step arithmetic, visual TNA milestone bar, date change revision modal with audit logging. |

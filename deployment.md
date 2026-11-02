@@ -84,9 +84,10 @@ The application is optimized for deployment on **Vercel**, **AWS Amplify**, or *
 
 ## 3. Reviewer Demo Credentials & Role Navigation
 
-The application provides two seamless ways to test all user roles:
-1. **Dedicated Sign-In Page**: [`http://localhost:3000/login`](http://localhost:3000/login) with one-click reviewer persona cards.
-2. **Instant Role Switcher**: Directly in the top navigation bar dropdown from any page.
+The application provides three seamless ways to test all user roles:
+1. **Dedicated Sign-In Page**: [`http://localhost:3000/login`](http://localhost:3000/login) with one-click reviewer persona cards and standard email/password or Buyer PIN verification.
+2. **Dedicated Factory Registration Page**: [`http://localhost:3000/signup`](http://localhost:3000/signup) (or `/register`) for provisioning new floor supervisors and merchandisers with factory unit assignment.
+3. **Instant Role Switcher**: Directly in the top navigation bar dropdown from any page.
 
 | Role Persona | Test User Identity | Default Password | Accessible Views & Features |
 |---|---|---|---|
