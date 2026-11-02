@@ -1,0 +1,162 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                 String              @id @default(cuid())
+  email              String              @unique
+  name               String
+  passwordHash       String              @default("demo123")
+  role               String              // "MERCHANDISER" | "SUPERVISOR" | "BUYER" | "MD"
+  languagePreference String              @default("ta") // "ta" | "en"
+  buyerCompanyId     String?
+  buyerCompany       BuyerCompany?       @relation(fields: [buyerCompanyId], references: [id])
+  unitId             String?
+  unit               Unit?               @relation(fields: [unitId], references: [id])
+  logsCreated        DailyProductionLog[]
+  auditsCreated      DateChangeAudit[]
+  createdAt          DateTime            @default(now())
+}
+
+model BuyerCompany {
+  id            String              @id @default(cuid())
+  name          String              // e.g. "Company B (UK)", "Company C (Germany)"
+  country       String              // "UK", "Germany", etc.
+  code          String              @unique // "CMP-B", "CMP-C"
+  contactEmail  String
+  accessPin     String              @default("BUYER2026")
+  orders        Order[]
+  users         User[]
+  notifications BuyerNotification[]
+  createdAt     DateTime            @default(now())
+}
+
+model Unit {
+  id                  String               @id @default(cuid())
+  name                String               // "Unit 1 - Arulpuram", "Subcontract - Murugan Printing"
+  type                String               // "OWN_FACTORY" | "SUBCONTRACT_PRINTING" | "SUBCONTRACT_WASHING"
+  location            String               @default("Tiruppur")
+  dailyCapacityPieces Int                  @default(1500)
+  orders              Order[]
+  users               User[]
+  logs                DailyProductionLog[]
+  createdAt           DateTime             @default(now())
+}
+
+model Order {
+  id                      String                 @id @default(cuid())
+  poNumber                String                 @unique // e.g. "B-PO-88213"
+  buyerCompanyId          String
+  buyerCompany            BuyerCompany           @relation(fields: [buyerCompanyId], references: [id])
+  styleName               String                 // "Men's crew neck tee, navy"
+  styleCode               String                 @default("STY-101")
+  fabricDescription       String                 @default("100% Combed Cotton Single Jersey 180 GSM")
+  totalQuantity           Int                    // 12000
+  orderValueInr           Float                  @default(2100000.0) // ₹21 Lakh average
+  exFactoryDate           DateTime               // Target completion date
+  originalExFactoryDate   DateTime
+  shipWeek                String                 // e.g. "2026-W47"
+  unitId                  String
+  unit                    Unit                   @relation(fields: [unitId], references: [id])
+  currentStage            String                 // "Knitting", "Stitching", "Finishing", etc.
+  currentStageQuantity    Int                    @default(0) // Quantity completed in current stage
+  statusColor             String                 @default("GREEN") // "GREEN" | "AMBER" | "RED"
+  runRateDeficit          Float                  @default(0.0) // Shortfall/surplus in pcs/day
+  piecesNeededPerDay      Float                  @default(0.0)
+  piecesMadePerDay        Float                  @default(0.0)
+  projectedDelayDays      Int                    @default(0)
+  projectedCompletionDate DateTime?
+  airFreightRiskAmount    Float                  @default(0.0) // Potential ₹3.5L penalty
+  delayDiscountRiskAmount Float                  @default(0.0) // Potential 5% discount (₹1.05L)
+  notes                   String?
+  milestones              TnaMilestone[]
+  sizeBreakdowns          OrderItemBreakdown[]
+  productionLogs          DailyProductionLog[]
+  dateAudits              DateChangeAudit[]
+  notifications           BuyerNotification[]
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+}
+
+model OrderItemBreakdown {
+  id           String @id @default(cuid())
+  orderId      String
+  order        Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  color        String
+  size         String
+  plannedQty   Int
+  completedQty Int    @default(0)
+}
+
+model TnaMilestone {
+  id               String    @id @default(cuid())
+  orderId          String
+  order            Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  sequenceOrder    Int
+  stageName        String    // "Yarn Procurement", "Knitting", "Dyeing", "Cutting", "Printing", "Stitching", "Finishing", "Packing", "Final Inspection"
+  plannedStartDate DateTime
+  plannedEndDate   DateTime
+  actualStartDate  DateTime?
+  actualEndDate    DateTime?
+  targetQty        Int
+  completedQty     Int       @default(0)
+  status           String    @default("PENDING") // "PENDING" | "IN_PROGRESS" | "COMPLETED" | "DELAYED"
+  notes            String?
+}
+
+model DailyProductionLog {
+  id                           String   @id @default(cuid())
+  orderId                      String
+  order                        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  unitId                       String
+  unit                         Unit     @relation(fields: [unitId], references: [id])
+  supervisorId                 String
+  supervisor                   User     @relation(fields: [supervisorId], references: [id])
+  date                         DateTime @default(now())
+  stage                        String
+  quantityProduced             Int
+  rejectedQuantity             Int      @default(0)
+  photoUrl                     String?
+  originalTamilNote            String?
+  voiceAudioUrl                String?
+  aiEnglishTranslation        String?
+  aiReasonCategory             String?  // "Machine Breakdown", "Needle Shortage", "Fabric Defect", "Power Outage", etc.
+  aiConfidence                 Float?   @default(0.92)
+  merchandiserConfirmed        Boolean  @default(false) // Buyer sees only after confirmation
+  merchandiserOverrideCategory String?
+  merchandiserComments         String?
+  syncStatus                   String   @default("SYNCED") // "SYNCED" | "QUEUED_OFFLINE"
+  createdAt                    DateTime @default(now())
+}
+
+model DateChangeAudit {
+  id                 String   @id @default(cuid())
+  orderId            String
+  order              Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  changedById        String
+  changedBy          User     @relation(fields: [changedById], references: [id])
+  oldExFactoryDate   DateTime
+  newExFactoryDate   DateTime
+  daysDifference     Int
+  formalReason       String
+  buyerNotified      Boolean  @default(false)
+  createdAt          DateTime @default(now())
+}
+
+model BuyerNotification {
+  id            String       @id @default(cuid())
+  orderId       String
+  order         Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  buyerCompanyId String
+  buyerCompany  BuyerCompany @relation(fields: [buyerCompanyId], references: [id])
+  title         String
+  message       String
+  severity      String       @default("INFO") // "INFO" | "WARNING" | "CRITICAL"
+  isRead        Boolean      @default(false)
+  confirmedAt   DateTime     @default(now())
+}
