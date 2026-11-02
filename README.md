@@ -2,8 +2,9 @@
 
 > Production, TNA Milestones & Run-Rate Delay Projection Engine for Tiruppur Knitwear Exporters (Company A)
 
-[![Build & Tests](https://img.shields.io/badge/tests-16%20passed-emerald)](https://github.com/paridhiparidhi/knittrack-tiruppur)
+[![Build & Tests](https://img.shields.io/badge/tests-24%20passed-emerald)](https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org/)
+[![Express & MongoDB](https://img.shields.io/badge/Express-Backend-blue)](https://expressjs.com/)
 
 ---
 
@@ -21,30 +22,34 @@ Company A (Tiruppur knitwear exporter, ₹95–110 Cr/yr, 3 own units + subcontr
 
 ## 🚀 Key Features Shipped
 
-1. **Order Setup & TNA Template Generator**: Automatically computes backward milestone schedules from ex-factory dates across 9 Tiruppur garment stages.
-2. **Supervisor Mobile Floor Update (Tamil UI)**: Engineered for 2–3 GB RAM budget Android phones; big buttons, camera photo proof, voice note recorder, and instant offline queue with sync badge.
-3. **Run-Rate Delay Projection Engine**: Exposes transparent daily velocity arithmetic (`Pieces Needed / Working Days Left vs Actual Floor Pace`), calculating shortfall and projected delays excluding Sundays.
-4. **The "When AI is Wrong" Protocol**: AI translates Tamil floor notes into English reason categories. Unconfirmed notes are quarantined from buyers; merchandisers can verify or override categories in the AI Review Queue.
-5. **Buyer Portal (Strict Tenant Scoping)**: UK and EU buyers (Company B, Company C) view their own milestones, photos, and date compliance history with zero cross-tenant leakage.
-6. **Date Revision Audit Compliance**: Permanent audit trail recording every ex-factory date alteration with required formal reasons.
-7. **Executive / MD Loss Dashboard**: High-level tracking of ₹ at risk, capacity health across 3 factories, and late shipment reduction metrics.
+1. **Dedicated Role-Based Authentication & Provisioning (`/login`, `/signup`)**:
+   - 1-Click evaluator presets for all 5 roles (Senior Merchandiser, Floor Supervisor [Tamil], UK Buyer B, German Buyer C, Managing Director).
+   - JWT authentication with rate limiting and password peek toggle.
+   - Overseas Buyer Access PIN direct portal (`BUYER-B-2026` / `BUYER-C-2026`).
+   - Self-service employee signup with factory unit assignment and Tamil/English preference.
+2. **Order Setup & TNA Template Generator (`/orders/new`)**: Automatically computes backward milestone schedules from ex-factory dates across 9 Tiruppur garment stages.
+3. **Supervisor Mobile Floor Update (`/supervisor`)**: Engineered for 2–3 GB RAM budget Android phones; big touch numbers, camera photo proof, voice note recorder, and instant offline queue with sync badge.
+4. **Run-Rate Delay Projection Engine (`/orders/[id]`)**: Exposes transparent daily velocity arithmetic (`Pieces Needed / Working Days Left vs Actual Floor Pace`), calculating shortfall and projected delays excluding Sundays.
+5. **The "When AI is Wrong" Protocol (`/review`)**: AI translates Tamil floor notes into English reason categories. Unconfirmed notes are quarantined from buyers; merchandisers can verify or override categories in the AI Review Queue.
+6. **Buyer Portal (`/buyer`)**: UK and EU buyers (Company B, Company C) view their own milestones, photos, and date compliance history with strict tenant scoping (zero cross-tenant leakage).
+7. **Date Revision Audit Compliance**: Permanent audit trail recording every ex-factory date alteration with required formal reasons.
+8. **Executive / MD Loss Dashboard (`/executive`)**: High-level tracking of ₹ at risk, capacity health across 3 factories, and late shipment reduction metrics.
+9. **Weekly Status Exports (`/api/export`)**: Instant Excel CSV status export per buyer.
 
 ---
 
-## 🧪 Automated Test Suite (16 Tests)
+## 🧪 Automated Test Suite (24 Tests)
 
 Run the automated test suite with Node's native runner:
 ```bash
 npm test
 ```
-Tests cover:
-- Run-Rate Math Engine & 6-Day Calendar logic (skipping Sundays)
-- Critical RED status and ₹3.5L air freight penalty triggers
-- Step-by-step arithmetic formula transparency
-- Tamil script & Tanglish NLP classification
-- AI low-confidence review flags (< 75%)
-- Multi-tenant Buyer isolation & access control gates
-- Immutable date change compliance audit logging
+All 24 tests pass in ~400ms, covering:
+- **Run-Rate Math Engine**: 6-day factory calendar (skipping Sundays), piece deficit calculations, critical RED delay thresholds, and ₹3.5L air freight penalty triggers.
+- **Tamil NLP Textile Classifier**: Tamil script tokenization, Tanglish phonetic mapping, confidence scoring, and low-confidence quarantine (< 75%).
+- **Multi-Tenant Buyer Isolation**: Verification that Buyer B never sees Buyer C styles or quantities.
+- **Immutable Date Change Audit**: Permanent timestamping, formal reason enforcement, and revision tracking.
+- **Express Backend & Zod Validation**: Input schemas, JWT signing, role middleware (blocking supervisors from order creation), and idempotent `clientUuid` stage update submission.
 
 ---
 
@@ -54,11 +59,16 @@ Tests cover:
 # 1. Install dependencies
 npm install
 
-# 2. Run test suite
+# 2. Run test suite (24 tests)
 npm test
 
-# 3. Start local server
+# 3. Start Next.js frontend & API
+npm start
+# or development mode:
 npm run dev
+
+# 4. Optional: Start dedicated Express + MongoDB backend
+npm run server
 ```
 Open [http://localhost:3000](http://localhost:3000).
 
