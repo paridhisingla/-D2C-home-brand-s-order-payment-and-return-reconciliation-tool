@@ -157,7 +157,15 @@ export async function getOrders(filters: {
     );
   }
 
-  // Populate buyer and unit names
+  // Populate buyer and unit names and sort worst orders first (RED > AMBER > GREEN)
+  const colorPriority: Record<string, number> = { RED: 0, AMBER: 1, GREEN: 2 };
+  orders.sort((a, b) => {
+    const pA = colorPriority[a.statusColor] ?? 9;
+    const pB = colorPriority[b.statusColor] ?? 9;
+    if (pA !== pB) return pA - pB;
+    return (b.projectedDelayDays || 0) - (a.projectedDelayDays || 0);
+  });
+
   return orders.map((o) => {
     const buyer = globalStore.buyers.find((b) => b.id === o.buyerId);
     const unit = globalStore.units.find((u) => u.id === o.unitId);

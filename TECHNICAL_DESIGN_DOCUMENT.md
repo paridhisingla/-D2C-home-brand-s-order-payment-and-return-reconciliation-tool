@@ -62,14 +62,16 @@ KnitTrack delivers an end-to-end digital tracking system that replaces manual ph
 +-----------------------------------------------------------------------------------+
 ```
 
-### Why Next.js 14 (App Router) + TypeScript
+### Why Next.js 14 + Express & MongoDB Dual-Engine Architecture
 1. **Low-Latency Mobile Delivery for Low-End Devices**: Unit supervisors in Tiruppur utilize budget Android smartphones (2–3 GB RAM) on patchy 3G/4G connections. Next.js 14 server components minimize client JavaScript payload (shared First Load JS is only ~87 kB), drastically reducing memory overhead and eliminating browser freezes on entry-level devices.
-2. **Unified Full-Stack Deployment**: Consolidates the frontend UI, API routes, calculation logic, and data layer into a single, cohesive codebase with zero CORS configuration overhead.
-3. **Strict Type Safety**: TypeScript enforces rigid contracts across orders, size breakdowns, daily production logs, and compliance audit records, preventing runtime null-pointer exceptions in critical arithmetic formulas.
+2. **Dedicated Express + MongoDB REST API**: Provides standalone microservice capabilities with `Mongoose` models (`User`, `Buyer`, `Order`, `StageUpdate`), strict `Zod` validation on every endpoint, `Helmet` headers, `express-rate-limit` on login, and `Multer` file size & MIME filtering.
+3. **Idempotent Offline Synchronization**: Floor stage updates submitted with a unique `clientUuid` prevent duplicate piece-count incrementation if network fluctuates during supervisor submission.
+4. **Strict Type & Schema Safety**: TypeScript and Zod schemas enforce rigid contracts across orders, size breakdowns, daily production logs, and compliance audit records, preventing runtime null-pointer exceptions in critical arithmetic formulas.
 
 ### Resilient Data Access Architecture
-The application employs a dual-tier persistence layer:
-- **Prisma ORM with SQLite**: Provides a clean relational structure for persistent storage, indexing, and migrations.
+The application supports multiple persistence strategies:
+- **Express + MongoDB Atlas / Mongoose**: Cloud document store holding `User`, `Buyer`, `Order` (with lines, milestones, dateHistory), and `StageUpdate`.
+- **Prisma ORM with SQLite**: Provides a clean relational structure for local persistent storage and migrations.
 - **In-Memory Seed Store**: Provides instant, zero-latency bootstrapping preloaded with the brief's sample data (`B-PO-88213`, `B-PO-88240`, `C-PO-0488`). This ensures immediate reviewer usability without requiring complex database server provisioning.
 
 ### Multi-Tenant Buyer Isolation Model

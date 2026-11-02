@@ -45,7 +45,15 @@ export default function OrderBoardPage() {
       const res = await fetch(`/api/orders?${params.toString()}`);
       const data = await res.json();
       if (data.success) {
-        setOrders(data.orders);
+        // Sort worst orders first (RED first, then AMBER, then GREEN)
+        const priority: Record<string, number> = { RED: 0, AMBER: 1, GREEN: 2 };
+        const sorted = [...data.orders].sort((a, b) => {
+          const pA = priority[a.statusColor] ?? 9;
+          const pB = priority[b.statusColor] ?? 9;
+          if (pA !== pB) return pA - pB;
+          return (b.projectedDelayDays || 0) - (a.projectedDelayDays || 0);
+        });
+        setOrders(sorted);
       }
     } catch (err) {
       console.error('Failed to load orders', err);

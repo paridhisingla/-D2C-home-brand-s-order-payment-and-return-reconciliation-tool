@@ -10,6 +10,7 @@ Production & TNA Tracking System for Tiruppur Knitwear Exporters (Company A)
 - **Node.js**: v18.17.0 or v20.x+ (tested on Node v20.16.0)
 - **npm**: v9.x or v10.x (or pnpm/yarn)
 - **Git**
+- **MongoDB**: MongoDB Atlas URI or local MongoDB (`mongodb://127.0.0.1:27017/knittrack`)
 
 ### Step 1: Clone the Repository
 ```bash
@@ -23,32 +24,37 @@ npm install
 ```
 
 ### Step 3: Run Database Setup & Seeding
-The application is pre-configured with a dual-persistence layer: SQLite via Prisma as well as an in-memory cached data provider pre-seeded with the client brief's exact purchase orders (`B-PO-88213`, `B-PO-88240`, `C-PO-0488`), 5 units, and compliance date audit records.
-```bash
-# Optional: Push schema to SQLite database if utilizing persistent file DB
-npx prisma db push
-```
+The project provides dual database support:
+- **Express + MongoDB / MongoDB Atlas**:
+  ```bash
+  # Seeds MongoDB with 2 buyers, 1 merchandiser, 2 supervisors, 3 sample orders & multi-day floor logs
+  npm run server:seed
+  ```
+- **Next.js In-Memory & SQLite Layer**:
+  Pre-seeded out-of-the-box with `B-PO-88213`, `B-PO-88240`, `C-PO-0488`.
 
 ### Step 4: Run Automated Tests
-Execute the comprehensive 16-test suite covering the Run-Rate Math Engine, Tamil NLP Classification, "When AI is Wrong" protocol, Multi-Tenant Buyer Isolation, and Compliance Date Audit Logging:
+Execute the full test suite (24 tests) covering Run-Rate Math, Tamil NLP Classifier, Buyer Tenant Isolation, Date Change Audits, and Express Zod / Auth / Idempotency validation:
 ```bash
 npm test
 ```
-*Expected result:* 16/16 tests passing (~200ms).
+*Expected result:* 24/24 tests passing (~400ms).
 
-### Step 5: Start the Development Server
+### Step 5: Start Servers
+
+#### Option A: Start Full Next.js Application (Port 3000)
 ```bash
 npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your web browser.
-
-### Step 6: Production Build Verification
-To run an optimized production build locally:
-```bash
-npm run build
+# Or optimized production mode:
 npm start
 ```
-The server will start on port 3000.
+Open [http://localhost:3000](http://localhost:3000).
+
+#### Option B: Start Dedicated Express + MongoDB Backend (Port 5000)
+```bash
+npm run server
+```
+Server starts on [http://localhost:5000](http://localhost:5000) with Helmet, Express Rate Limit, Zod input validation, JWT auth, and Mongoose models.
 
 ---
 
@@ -66,6 +72,8 @@ The application is optimized for deployment on **Vercel**, **AWS Amplify**, or *
 
 | Variable Name | Description | Environment |
 |---|---|---|
+| `MONGODB_URI` | MongoDB Atlas cluster connection string | Production / Staging |
+| `JWT_SECRET` | Secret key used for Express JWT and buyer token generation | Production |
 | `DATABASE_URL` | SQLite file path or PostgreSQL connection string | Production / Staging |
 | `NEXTAUTH_SECRET` | Secret key used for session encryption and signing | Production |
 | `NEXTAUTH_URL` | Canonical URL of the deployed application | Production |
