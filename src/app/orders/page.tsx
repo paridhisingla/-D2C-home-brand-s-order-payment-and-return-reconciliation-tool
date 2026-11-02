@@ -92,6 +92,15 @@ export default function OrderBoardPage() {
         </div>
 
         <div className="flex items-center gap-2.5">
+          <a
+            href="/api/export"
+            download
+            className="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold px-3 py-2 rounded-lg shadow-xs transition"
+            title="Download formatted CSV spreadsheet"
+          >
+            <Download className="w-3.5 h-3.5 text-slate-500" />
+            <span>Export Excel</span>
+          </a>
           <Link
             href="/orders/new"
             className="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-3.5 py-2 rounded-lg shadow-sm transition"

@@ -76,15 +76,17 @@ The application is optimized for deployment on **Vercel**, **AWS Amplify**, or *
 
 ## 3. Reviewer Demo Credentials & Role Navigation
 
-The application provides an instant **Role Persona Switcher** directly in the top navigation bar, allowing reviewers to jump between roles with one click without friction:
+The application provides two seamless ways to test all user roles:
+1. **Dedicated Sign-In Page**: [`http://localhost:3000/login`](http://localhost:3000/login) with one-click reviewer persona cards.
+2. **Instant Role Switcher**: Directly in the top navigation bar dropdown from any page.
 
-| Role Persona | Test User Identity | Accessible Views & Features |
-|---|---|---|
-| **Merchandiser** *(Default)* | Karthik Subramanian (`karthik@tiruppurknitwear.com`) | Complete Order Board, Run-Rate Math Drilldown, PO Setup Wizard, Ex-Factory Date Revision Modal, AI Review Queue |
-| **Unit Supervisor (Floor)** | Muthusamy (`muthusamy@tiruppurknitwear.com`) | Mobile-optimized floor interface (2-3 GB RAM design), Tamil UI toggle, daily quantity/defect entry, camera/photo upload, Tamil voice note recorder, offline queue sync |
-| **Buyer: Company B (UK)** | Sarah Jenkins (`sarah.j@companyb-fashion.co.uk`) | Strictly isolated view of Company B orders only (`B-PO-88213`, `B-PO-88240`), TNA milestones, verified floor photos, date change compliance history |
-| **Buyer: Company C (Germany)** | Klaus Weber (`klaus.w@companyc-retail.de`) | Strictly isolated view of Company C orders only (`C-PO-0488`), zero cross-buyer leakage |
-| **Managing Director (MD)** | V. Sundaram (`md@tiruppurknitwear.com`) | Executive Dashboard: ₹1.08 Crore annual loss tracking, live ₹ exposure at risk, unit capacity utilization |
+| Role Persona | Test User Identity | Default Password | Accessible Views & Features |
+|---|---|---|---|
+| **Merchandiser** *(Default)* | Karthik Subramanian (`karthik@tiruppurknitwear.com`) | `demo123` | Complete Order Board, Run-Rate Math Drilldown, PO Setup Wizard, Ex-Factory Date Revision Modal, AI Review Queue, Excel CSV Export |
+| **Unit Supervisor (Floor)** | Muthusamy (`muthusamy@tiruppurknitwear.com`) | `demo123` | Mobile-optimized floor interface (2-3 GB RAM design), Tamil UI toggle, daily quantity/defect entry, camera/photo upload, Tamil voice note recorder, offline queue sync |
+| **Buyer: Company B (UK)** | Sarah Jenkins (`sarah.j@companyb-fashion.co.uk`) | `demo123` | Strictly isolated view of Company B orders only (`B-PO-88213`, `B-PO-88240`), TNA milestones, verified floor photos, date change compliance history, CSV export |
+| **Buyer: Company C (Germany)** | Klaus Weber (`klaus.w@companyc-retail.de`) | `demo123` | Strictly isolated view of Company C orders only (`C-PO-0488`), zero cross-buyer leakage |
+| **Managing Director (MD)** | V. Sundaram (`md@tiruppurknitwear.com`) | `demo123` | Executive Dashboard: ₹1.08 Crore annual loss tracking, live ₹ exposure at risk, unit capacity utilization |
 
 ### Quick Actions for Reviewers:
 1. **Reset to Clean Sample Data**: Click the **Rotate/Reset** icon in the top right navbar at any time to instantly restore the pristine client sample state.

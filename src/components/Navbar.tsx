@@ -193,6 +193,15 @@ export const Navbar = () => {
               <span>{lang === 'en' ? 'தமிழ்' : 'English'}</span>
             </button>
 
+            {/* Login / Switch Account Link */}
+            <Link
+              href="/login"
+              title="Sign In / Switch Accounts"
+              className="text-xs font-medium text-slate-600 hover:text-brand-600 p-1.5 rounded-lg hover:bg-slate-50 transition"
+            >
+              <ShieldCheck className="w-4 h-4 text-slate-500 hover:text-brand-600" />
+            </Link>
+
             {/* Reset to Sample Data */}
             <button
               onClick={handleResetData}

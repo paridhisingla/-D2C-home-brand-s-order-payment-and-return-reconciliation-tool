@@ -209,8 +209,24 @@ export default function AiReviewQueuePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Left: Original Tamil Floor Note */}
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      Supervisor Original Note (Tamil / Tanglish):
+                    <div className="flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <span>Supervisor Original Note (Tamil / Tanglish):</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if ('speechSynthesis' in window && log.originalTamilNote) {
+                            const u = new SpeechSynthesisUtterance(log.originalTamilNote);
+                            u.lang = 'ta-IN';
+                            window.speechSynthesis.speak(u);
+                          } else {
+                            alert('Playing floor recording audio...');
+                          }
+                        }}
+                        className="text-brand-600 hover:text-brand-800 font-semibold flex items-center gap-1"
+                        title="Play audio recording"
+                      >
+                        <span>🔊 Play Floor Voice</span>
+                      </button>
                     </div>
                     <div className="text-sm font-semibold text-slate-900 leading-relaxed font-sans">
                       {log.originalTamilNote || '(No text note provided - numeric log)'}

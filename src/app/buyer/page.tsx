@@ -139,13 +139,24 @@ function BuyerPortalContent() {
             </p>
           </div>
 
-          <button
-            onClick={() => window.print()}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-xs transition"
-          >
-            <Printer className="w-3.5 h-3.5 text-slate-500" />
-            <span>Weekly Status Report</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <a
+              href={`/api/export?buyerCompanyId=${activeBuyerId}`}
+              download
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-xs transition"
+              title="Download Excel / CSV weekly status report"
+            >
+              <Download className="w-3.5 h-3.5 text-slate-500" />
+              <span>Export Excel</span>
+            </a>
+            <button
+              onClick={() => window.print()}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-xs transition"
+            >
+              <Printer className="w-3.5 h-3.5 text-slate-500" />
+              <span>Print Status Report</span>
+            </button>
+          </div>
         </div>
 
         {loading ? (
