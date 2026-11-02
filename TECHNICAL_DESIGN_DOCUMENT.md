@@ -270,9 +270,11 @@ The client brief mandates: *"The client values good, minimal design: clean layou
 
 | Screen | Target User | Key Design Decisions |
 |---|---|---|
-| **Supervisor Mobile (`/supervisor`)** | Unit Floor Supervisor | High contrast, large touch targets (min 48px height), Tamil typography, single-screen layout, no multi-level dropdowns, big numeric inputs, instant offline queue banner. |
-| **Merchandiser Order Board (`/orders`)** | Office Merchandiser | Dense tabular view with high information ratio, visual status pills (Green/Amber/Red), immediate filters by Buyer, Unit, and Ship Week, real-time pace column. |
+| **Authentication Center (`/login`)** | All Personas (Reviewers, Floor Staff, Sourcing Buyers) | 4-tab unified hub: 1-Click Evaluation Presets, JWT credential sign-in with rate limiting, Buyer PIN/Token direct access, and new factory employee self-service registration. Shows active user badge and instant logout. |
+| **Merchandiser Order Board (`/orders`)** | Office Merchandiser | Dense tabular view with high information ratio, visual status pills (Green/Amber/Red), immediate filters by Buyer, Unit, and Ship Week, real-time pace column, worst orders automatically sorted first. |
+| **Order Setup Wizard (`/orders/new`)** | Merchandiser | PO creation with color × size matrix, ex-factory target, and automated backward TNA milestone calculation from industry templates. |
 | **Order Deep-Dive (`/orders/[id]`)** | Merchandiser & Floor Manager | Interactive "Show Formula Maths" accordion exposing step-by-step arithmetic, visual TNA milestone bar, date change revision modal with audit logging. |
+| **Supervisor Mobile (`/supervisor`)** | Unit Floor Supervisor | High contrast, large touch targets (min 48px height), Tamil typography, single-screen layout, no multi-level dropdowns, big numeric inputs, instant offline queue banner for 2–3 GB RAM phones. |
 | **AI Review Queue (`/review`)** | Merchandiser | Side-by-side card comparing raw Tamil floor note with AI English translation, confidence meter badge, one-click category override dropdown, and confirm button. |
 | **Buyer Portal (`/buyer`)** | UK & EU Sourcing Staff | Clean, brand-isolated read-only portal, progress bars, published photo evidence, formal date change audit history, printable status report export. |
 | **Executive Dashboard (`/executive`)** | Managing Director | High-level financial loss tracking against the ₹1.08 Cr benchmark, unit capacity ranking, and 2-week early warning alert matrix. |
