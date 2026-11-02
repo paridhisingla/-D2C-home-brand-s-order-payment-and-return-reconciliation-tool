@@ -14,7 +14,7 @@ Production & TNA Tracking System for Tiruppur Knitwear Exporters (Company A)
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/paridhiparidhi/knittrack-tiruppur.git
+git clone https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view.git
 cd knittrack-tiruppur
 ```
 
