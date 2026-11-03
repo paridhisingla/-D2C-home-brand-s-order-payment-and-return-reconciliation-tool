@@ -20,6 +20,7 @@ import {
   HelpCircle,
   Building2,
 } from 'lucide-react';
+import { Logo } from '@/components/Logo';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -65,7 +66,7 @@ export default function LoginPage() {
       label: '👔 Merchandiser',
       email: 'karthik@tiruppurknitwear.com',
       destination: '/orders',
-      color: 'bg-brand-50 text-brand-700 border-brand-200 hover:bg-brand-100',
+      color: 'bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 border-brand-200 dark:border-brand-800 hover:bg-brand-100 dark:hover:bg-brand-900/50',
     },
     {
       role: 'SUPERVISOR',
@@ -73,7 +74,7 @@ export default function LoginPage() {
       label: '📱 Supervisor (தமிழ்)',
       email: 'muthusamy@tiruppurknitwear.com',
       destination: '/supervisor',
-      color: 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100',
+      color: 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/50',
     },
     {
       role: 'BUYER_B',
@@ -81,7 +82,7 @@ export default function LoginPage() {
       label: '🇬🇧 Buyer B (UK)',
       email: 'sarah.j@companyb-fashion.co.uk',
       destination: '/buyer?company=buyer-b-uk',
-      color: 'bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100',
+      color: 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50',
     },
     {
       role: 'BUYER_C',
@@ -89,7 +90,7 @@ export default function LoginPage() {
       label: '🇩🇪 Buyer C (Germany)',
       email: 'klaus.w@companyc-retail.de',
       destination: '/buyer?company=buyer-c-de',
-      color: 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200',
+      color: 'bg-stone-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-stone-300 dark:border-slate-700 hover:bg-stone-200 dark:hover:bg-slate-700',
     },
     {
       role: 'MD',
@@ -97,7 +98,7 @@ export default function LoginPage() {
       label: '📊 Managing Director',
       email: 'md@tiruppurknitwear.com',
       destination: '/executive',
-      color: 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100',
+      color: 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-900/60 hover:bg-rose-100 dark:hover:bg-rose-900/50',
     },
   ];
 
@@ -178,17 +179,20 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[85vh] flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-xs font-semibold">
-          <ShieldCheck className="w-3.5 h-3.5 text-brand-600" />
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-3">
+        <div className="flex justify-center mb-1">
+          <Logo size="lg" />
+        </div>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800 text-xs font-bold">
+          <ShieldCheck className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
           KnitTrack Tiruppur • Production Security
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
           Log in to your account
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500">
+        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
           Or{' '}
-          <Link href="/signup" className="font-semibold text-brand-600 hover:text-brand-500 underline">
+          <Link href="/signup" className="font-bold text-brand-600 dark:text-brand-400 hover:underline">
             create a new factory account
           </Link>
         </p>
@@ -197,7 +201,7 @@ export default function LoginPage() {
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md space-y-4">
         {/* Active Session Alert */}
         {currentSession.role && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 text-xs text-emerald-900 flex items-center justify-between shadow-xs">
+          <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-2xl p-4 text-xs text-emerald-900 dark:text-emerald-200 flex items-center justify-between shadow-xs">
             <div>
               <span className="font-bold">Active Session:</span> {currentSession.name} ({currentSession.role})
             </div>
@@ -212,11 +216,11 @@ export default function LoginPage() {
                     ? '/executive'
                     : '/orders'
                 }
-                className="font-bold underline hover:text-emerald-700"
+                className="font-bold underline hover:text-emerald-700 dark:hover:text-emerald-300"
               >
                 Go to App →
               </Link>
-              <button onClick={handleSignOut} className="text-slate-500 hover:text-rose-600">
+              <button onClick={handleSignOut} className="text-slate-500 dark:text-slate-400 hover:text-rose-600">
                 (Sign out)
               </button>
             </div>
@@ -225,37 +229,37 @@ export default function LoginPage() {
 
         {/* Error / Success messages */}
         {errorMessage && (
-          <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2 shadow-xs">
-            <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+          <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-800 dark:text-rose-300 text-xs font-bold flex items-center gap-2 shadow-xs">
+            <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400 flex-shrink-0" />
             <span>{errorMessage}</span>
           </div>
         )}
 
         {successMessage && (
-          <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 shadow-xs">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold flex items-center gap-2 shadow-xs">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
             <span>{successMessage}</span>
           </div>
         )}
 
         {/* 1-Click Evaluation Quick Logins for Reviewers */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-2.5">
+        <div className="bg-white dark:bg-slate-900 border border-stone-200/90 dark:border-slate-800 rounded-2xl p-5 shadow-xs space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-brand-600" />
+            <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
               1-Click Reviewer Presets:
             </span>
-            <span className="text-[10px] text-slate-400">Instant evaluation</span>
+            <span className="text-[10px] text-slate-400 dark:text-slate-500">Instant evaluation</span>
           </div>
 
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {demoAccounts.map((acc) => (
               <button
                 key={acc.role}
                 type="button"
                 onClick={() => handleInstantDemoLogin(acc)}
                 disabled={loading}
-                className={`text-xs font-semibold px-2.5 py-1.5 rounded-lg border transition shadow-2xs ${acc.color}`}
+                className={`text-xs font-bold px-3 py-1.5 rounded-xl border transition shadow-2xs ${acc.color}`}
               >
                 {acc.label}
               </button>
@@ -264,14 +268,14 @@ export default function LoginPage() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-white py-6 px-4 shadow-sm border border-slate-200 rounded-2xl sm:px-8 space-y-5">
+        <div className="bg-white dark:bg-slate-900 py-6 px-5 sm:px-8 shadow-xs border border-stone-200/90 dark:border-slate-800 rounded-2xl space-y-5">
           {/* Mode Switcher: Factory Staff vs Buyer Portal */}
-          <div className="flex rounded-lg bg-slate-100 p-1 text-xs">
+          <div className="flex rounded-xl bg-stone-100 dark:bg-slate-800 p-1 text-xs border border-stone-200/80 dark:border-slate-700">
             <button
               type="button"
               onClick={() => { setIsBuyerMode(false); setErrorMessage(null); }}
-              className={`flex-1 py-1.5 rounded-md font-semibold transition ${
-                !isBuyerMode ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              className={`flex-1 py-2 rounded-lg font-bold transition ${
+                !isBuyerMode ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
               }`}
             >
               Factory Staff Login
@@ -279,8 +283,8 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => { setIsBuyerMode(true); setErrorMessage(null); }}
-              className={`flex-1 py-1.5 rounded-md font-semibold transition ${
-                isBuyerMode ? 'bg-white text-indigo-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              className={`flex-1 py-2 rounded-lg font-bold transition ${
+                isBuyerMode ? 'bg-white dark:bg-slate-700 text-indigo-900 dark:text-indigo-300 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
               }`}
             >
               Overseas Buyer PIN
@@ -292,51 +296,53 @@ export default function LoginPage() {
               <>
                 {/* Email field */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                     Email address
                   </label>
                   <div className="relative">
-                    <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                    <Mail className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-3.5" />
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="name@tiruppurknitwear.com"
-                      className="w-full text-xs pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 font-mono"
+                      className="w-full text-xs pl-10 pr-3 py-2.5 border border-stone-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 font-mono shadow-2xs"
                     />
                   </div>
                 </div>
 
                 {/* Password field */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                     Password
                   </label>
                   <div className="relative">
-                    <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                    <Lock className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-3.5" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full text-xs pl-9 pr-10 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 font-mono"
+                      className="w-full text-xs pl-10 pr-10 py-2.5 border border-stone-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 font-mono shadow-2xs"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                   <div className="flex items-center justify-between mt-1.5">
-                    <span className="text-[11px] text-slate-400">Demo password: <code className="text-slate-700 bg-slate-100 px-1 py-0.5 rounded font-mono">demo123</code></span>
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500">
+                      Demo password: <code className="text-slate-800 dark:text-slate-200 bg-stone-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-md font-mono font-bold">demo123</code>
+                    </span>
                     <button
                       type="button"
                       onClick={() => setShowForgotModal(true)}
-                      className="text-[11px] text-brand-600 hover:text-brand-700 font-semibold underline"
+                      className="text-[11px] text-brand-600 dark:text-brand-400 hover:underline font-bold"
                     >
                       Forgot password?
                     </button>
@@ -350,9 +356,9 @@ export default function LoginPage() {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 text-brand-600 border-slate-300 rounded focus:ring-brand-500"
+                    className="w-4 h-4 text-brand-600 border-stone-300 dark:border-slate-700 rounded focus:ring-brand-500"
                   />
-                  <label htmlFor="remember-me" className="ml-2 block text-xs text-slate-700">
+                  <label htmlFor="remember-me" className="ml-2 block text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Remember my session for 7 days
                   </label>
                 </div>
@@ -361,37 +367,37 @@ export default function LoginPage() {
               <>
                 {/* Buyer PIN mode */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                     Buyer Access PIN or Buyer Code
                   </label>
                   <div className="relative">
-                    <KeyRound className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                    <KeyRound className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-3.5" />
                     <input
                       type="text"
                       required
                       value={buyerPin}
                       onChange={(e) => setBuyerPin(e.target.value)}
                       placeholder="e.g. BUYER-B-2026 or BUYER-C-2026"
-                      className="w-full text-xs pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 font-mono uppercase"
+                      className="w-full text-xs pl-10 pr-3 py-2.5 border border-stone-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 font-mono uppercase shadow-2xs"
                     />
                   </div>
-                  <div className="flex gap-2 mt-2">
+                  <div className="flex gap-2 mt-2.5">
                     <button
                       type="button"
                       onClick={() => setBuyerPin('BUYER-B-2026')}
-                      className="text-[11px] px-2 py-1 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 font-mono"
+                      className="text-[11px] px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 font-mono font-bold"
                     >
                       Company B (UK)
                     </button>
                     <button
                       type="button"
                       onClick={() => setBuyerPin('BUYER-C-2026')}
-                      className="text-[11px] px-2 py-1 rounded bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200 font-mono"
+                      className="text-[11px] px-2.5 py-1 rounded-lg bg-stone-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-stone-300 dark:border-slate-700 hover:bg-stone-200 dark:hover:bg-slate-700 font-mono font-bold"
                     >
                       Company C (Germany)
                     </button>
                   </div>
-                  <p className="text-[11px] text-slate-500 mt-2">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">
                     Enforces strict tenant isolation: Buyer B never sees Buyer C orders or factory pricing.
                   </p>
                 </div>
@@ -401,7 +407,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-2.5 px-4 rounded-lg text-white text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5 disabled:opacity-60 ${
+              className={`w-full py-2.5 px-4 rounded-xl text-white text-xs font-bold shadow-xs transition flex items-center justify-center gap-1.5 disabled:opacity-60 ${
                 isBuyerMode ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-brand-600 hover:bg-brand-700'
               }`}
             >
@@ -417,13 +423,13 @@ export default function LoginPage() {
           </form>
 
           {/* Sign Up Redirect CTA */}
-          <div className="pt-4 border-t border-slate-100 text-center space-y-2">
-            <p className="text-xs text-slate-600">
+          <div className="pt-4 border-t border-stone-100 dark:border-slate-800 text-center space-y-2">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               Need a factory staff or floor supervisor login?
             </p>
             <Link
               href="/signup"
-              className="inline-flex items-center justify-center gap-1 w-full py-2 px-3 rounded-lg border border-slate-300 hover:bg-slate-50 text-xs font-bold text-slate-700 transition"
+              className="inline-flex items-center justify-center gap-1 w-full py-2.5 px-3 rounded-xl border border-stone-300 dark:border-slate-700 hover:bg-stone-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 transition"
             >
               <span>Create New Factory Account</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -433,7 +439,7 @@ export default function LoginPage() {
 
         {/* Back Link */}
         <div className="text-center">
-          <Link href="/" className="text-xs text-slate-500 hover:text-slate-800 underline">
+          <Link href="/" className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 underline font-semibold">
             ← Back to Product Overview
           </Link>
         </div>
@@ -441,24 +447,24 @@ export default function LoginPage() {
 
       {/* Forgot Password Modal */}
       {showForgotModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-xl border border-slate-200">
-            <div className="flex items-center gap-2 text-brand-600">
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-xl border border-stone-200/90 dark:border-slate-800">
+            <div className="flex items-center gap-2 text-brand-600 dark:text-brand-400">
               <HelpCircle className="w-5 h-5" />
-              <h3 className="font-bold text-slate-900 text-sm">Demo Password Notice</h3>
+              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-sm">Demo Password Notice</h3>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               All demo accounts (Senior Merchandiser, Floor Supervisor, UK Buyer, German Buyer, and MD) are configured with password:
             </p>
-            <div className="p-3 bg-slate-100 rounded-lg text-center font-mono font-bold text-slate-800 text-sm">
+            <div className="p-3 bg-stone-100 dark:bg-slate-800 rounded-xl text-center font-mono font-bold text-slate-800 dark:text-slate-200 text-sm border border-stone-200 dark:border-slate-700">
               demo123
             </div>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
               In production, password reset sends an encrypted one-time link to the user&apos;s registered Tiruppur corporate email.
             </p>
             <button
               onClick={() => setShowForgotModal(false)}
-              className="w-full py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-lg transition"
+              className="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl transition shadow-xs"
             >
               Got it
             </button>

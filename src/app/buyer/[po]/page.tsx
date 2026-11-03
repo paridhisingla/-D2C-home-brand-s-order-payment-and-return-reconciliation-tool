@@ -34,8 +34,8 @@ export default function BuyerOrderDetailPage() {
 
   if (loading) {
     return (
-      <div className="max-w-5xl mx-auto px-4 py-16 text-center text-xs text-slate-400">
-        <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-brand-600" />
+      <div className="max-w-5xl mx-auto px-4 py-16 text-center text-xs text-slate-400 dark:text-slate-500">
+        <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-brand-600 dark:text-brand-400" />
         Loading buyer PO details...
       </div>
     );
@@ -44,8 +44,8 @@ export default function BuyerOrderDetailPage() {
   if (!order) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-3">
-        <h2 className="text-base font-bold text-slate-800">PO not found</h2>
-        <Link href="/buyer" className="text-xs text-brand-600 font-semibold underline">
+        <h2 className="text-base font-bold text-slate-800 dark:text-slate-200">PO not found</h2>
+        <Link href="/buyer" className="text-xs text-brand-600 dark:text-brand-400 font-bold underline">
           Return to Buyer Portal
         </Link>
       </div>
@@ -66,17 +66,17 @@ export default function BuyerOrderDetailPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/buyer"
-            className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+            className="p-2.5 rounded-xl border border-stone-200/90 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-stone-50 dark:hover:bg-slate-800 transition"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-slate-900">{order.poNumber}</h1>
+              <h1 className="text-2xl font-black text-slate-900 dark:text-slate-100">{order.poNumber}</h1>
               <StatusBadge status={order.statusColor} size="sm" />
             </div>
-            <p className="text-xs text-slate-500">
-              Style: <strong className="text-slate-800">{order.styleName}</strong> ({order.styleCode})
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Style: <strong className="text-slate-800 dark:text-slate-200">{order.styleName}</strong> ({order.styleCode})
             </p>
           </div>
         </div>
@@ -85,161 +85,147 @@ export default function BuyerOrderDetailPage() {
           <a
             href={`/api/export?buyerCompanyId=${order.buyerId}`}
             download
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-lg shadow-xs transition"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-stone-50 dark:hover:bg-slate-700 border border-stone-200/90 dark:border-slate-700 px-3.5 py-2 rounded-xl shadow-xs transition"
           >
             <span>Export CSV</span>
           </a>
           <button
             onClick={() => window.print()}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-lg shadow-xs transition"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-stone-50 dark:hover:bg-slate-700 border border-stone-200/90 dark:border-slate-700 px-3.5 py-2 rounded-xl shadow-xs transition"
           >
-            <Printer className="w-3.5 h-3.5 text-slate-500" />
+            <Printer className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
             <span>Print / Export PDF</span>
           </button>
         </div>
       </div>
 
       {/* PO Overview Card */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-stone-200/90 dark:border-slate-800 p-6 shadow-xs grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
         <div>
-          <span className="text-slate-400 block font-medium">Order Quantity</span>
-          <span className="text-lg font-bold text-slate-900">{order.totalQuantity.toLocaleString()} pcs</span>
+          <span className="text-slate-400 dark:text-slate-500 block font-bold uppercase tracking-wider text-[10px]">Order Quantity</span>
+          <span className="text-xl font-black text-slate-900 dark:text-slate-100 mt-1 block">{order.totalQuantity.toLocaleString()} pcs</span>
         </div>
         <div>
-          <span className="text-slate-400 block font-medium">Completed Output</span>
-          <span className="text-lg font-bold text-brand-600">
+          <span className="text-slate-400 dark:text-slate-500 block font-bold uppercase tracking-wider text-[10px]">Completed Output</span>
+          <span className="text-xl font-black text-brand-600 dark:text-brand-400 mt-1 block">
             {order.currentStageQuantity.toLocaleString()} pcs ({completionPct}%)
           </span>
         </div>
         <div>
-          <span className="text-slate-400 block font-medium">Ex-Factory Date</span>
-          <span className="text-lg font-bold font-mono text-slate-900">{order.exFactoryDate}</span>
+          <span className="text-slate-400 dark:text-slate-500 block font-bold uppercase tracking-wider text-[10px]">Ex-Factory Date</span>
+          <span className="text-xl font-black font-mono text-slate-900 dark:text-slate-100 mt-1 block">{order.exFactoryDate}</span>
         </div>
         <div>
-          <span className="text-slate-400 block font-medium">Ship Target Week</span>
-          <span className="text-lg font-bold font-mono text-slate-900">{order.shipWeek}</span>
+          <span className="text-slate-400 dark:text-slate-500 block font-bold uppercase tracking-wider text-[10px]">Ship Target Week</span>
+          <span className="text-xl font-black font-mono text-slate-900 dark:text-slate-100 mt-1 block">{order.shipWeek}</span>
         </div>
       </div>
 
       {/* TNA Milestones Timeline */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-        <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-stone-200/90 dark:border-slate-800 p-6 shadow-xs space-y-4">
+        <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
           Time-and-Action (TNA) Manufacturing Timeline
         </h2>
         <TnaTimeline milestones={order.milestones} currentStage={order.currentStage} />
       </div>
 
       {/* Verified Floor Notes & Photo Evidence */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-stone-200/90 dark:border-slate-800 p-6 shadow-xs space-y-4">
         <div>
-          <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+          <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
             Verified Factory Floor Updates & Photo Evidence
           </h2>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Photos and notes validated by our merchandising team prior to publication
           </p>
         </div>
 
-        {verifiedLogs.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {verifiedLogs.length === 0 ? (
+          <div className="p-8 text-center text-xs text-slate-400 dark:text-slate-500 border border-dashed border-stone-200 dark:border-slate-800 rounded-xl">
+            No published daily updates yet. Merchandiser team confirms each log before it displays in your portal.
+          </div>
+        ) : (
+          <div className="space-y-4">
             {verifiedLogs.map((log: any) => (
               <div
                 key={log.id}
-                className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 text-xs space-y-3"
+                className="p-5 rounded-xl border border-stone-200/90 dark:border-slate-800 bg-stone-50/50 dark:bg-slate-800/40 space-y-3 text-xs"
               >
-                <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                  <span className="font-bold text-slate-900">{log.stage}</span>
-                  <span className="font-mono text-slate-500">{log.date}</span>
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-200/80 dark:border-slate-700/80 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">{log.stage} Stage</span>
+                    <span className="text-slate-400 dark:text-slate-600">•</span>
+                    <span className="font-mono text-slate-500 dark:text-slate-400">{log.date}</span>
+                  </div>
+                  <span className="font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800 text-[11px] flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> Verified by Merchandiser
+                  </span>
                 </div>
 
-                <div className="flex items-baseline justify-between text-slate-700">
-                  <span>Batch Output:</span>
-                  <span className="font-bold text-slate-900">+{log.quantityProduced.toLocaleString()} pcs</span>
-                </div>
-
-                {log.aiEnglishTranslation && (
-                  <div className="bg-white p-2.5 rounded-lg border border-slate-200 text-slate-700">
-                    <span className="font-semibold text-slate-900 block text-[11px] mb-0.5">
-                      Status Note:
-                    </span>
-                    {log.aiEnglishTranslation}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <div className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                      <span className="font-bold text-slate-900 dark:text-slate-100">Status Update:</span>{' '}
+                      {log.merchandiserComments || log.aiEnglishTranslation}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      Reason Category: <strong className="text-slate-800 dark:text-slate-200">{log.merchandiserOverrideCategory || log.aiReasonCategory || 'Standard Output'}</strong>
+                    </div>
                   </div>
-                )}
 
-                {log.merchandiserComments && (
-                  <div className="text-[11px] text-blue-900 bg-blue-50 p-2 rounded border border-blue-100">
-                    <strong>Merchandiser Verified:</strong> {log.merchandiserComments}
-                  </div>
-                )}
-
-                {/* Supervisor Floor Photo Evidence */}
-                {log.photoUrl && (
-                  <div className="pt-1">
-                    <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1">
-                      <Camera className="w-3.5 h-3.5 text-brand-600" />
-                      Floor Photo Evidence
-                    </span>
-                    <div className="relative rounded-lg overflow-hidden border border-slate-200 h-40 bg-slate-100">
+                  {log.photoUrl && (
+                    <div className="rounded-xl overflow-hidden border border-stone-200 dark:border-slate-700 h-32 bg-stone-100 dark:bg-slate-800 shadow-2xs">
                       <img
                         src={log.photoUrl}
-                        alt="Floor verification"
+                        alt="Factory floor photo proof"
                         className="w-full h-full object-cover"
                       />
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ))}
-          </div>
-        ) : (
-          <div className="text-xs text-slate-400 py-6 text-center border border-dashed border-slate-200 rounded-lg">
-            No published status disruptions. Production progressing normally on schedule.
           </div>
         )}
       </div>
 
-      {/* Date Change Compliance Audit History */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-              <History className="w-4 h-4 text-brand-600" />
-              Compliance History: Ex-Factory Target Date Revisions
-            </h2>
-            <p className="text-xs text-slate-500">
-              Contractual history required for UK & EU sourcing compliance
-            </p>
-          </div>
-          <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">
-            {order.dateAudits?.length || 0} revisions
-          </span>
+      {/* Date Audit History */}
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-stone-200/90 dark:border-slate-800 p-6 shadow-xs space-y-4">
+        <div>
+          <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-1.5">
+            <History className="w-4 h-4 text-brand-600 dark:text-brand-400" />
+            Compliance Date Revision Audit Trail
+          </h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Official immutable record of agreed delivery schedule changes
+          </p>
         </div>
 
         {order.dateAudits && order.dateAudits.length > 0 ? (
-          <div className="space-y-2.5">
-            {order.dateAudits.map((audit: any) => (
+          <div className="space-y-3">
+            {order.dateAudits.map((a: any) => (
               <div
-                key={audit.id}
-                className="p-3.5 rounded-lg border border-slate-200 bg-slate-50 text-xs space-y-1.5"
+                key={a.id}
+                className="p-4 rounded-xl border border-stone-200/90 dark:border-slate-800 bg-stone-50/60 dark:bg-slate-800/40 text-xs space-y-1.5"
               >
-                <div className="flex items-center justify-between font-semibold text-slate-900">
-                  <span>
-                    Revised from <span className="font-mono text-rose-600">{audit.oldDate}</span> to{' '}
-                    <span className="font-mono text-emerald-600">{audit.newDate}</span>
+                <div className="flex justify-between items-center font-bold">
+                  <span className="text-slate-900 dark:text-slate-100">
+                    Revised from <span className="font-mono text-rose-600 dark:text-rose-400">{a.oldDate}</span> to{' '}
+                    <span className="font-mono text-emerald-600 dark:text-emerald-400 font-extrabold">{a.newDate}</span>
                   </span>
-                  <span className="text-[11px] text-slate-400 font-mono">
-                    {new Date(audit.timestamp).toLocaleDateString()}
+                  <span className="font-mono text-slate-400 dark:text-slate-500 text-[11px]">
+                    {new Date(a.timestamp).toLocaleDateString()}
                   </span>
                 </div>
-                <div className="text-slate-700">
-                  <strong>Formal Reason:</strong> {audit.reason}
+                <div className="text-slate-700 dark:text-slate-300">
+                  <span className="font-bold text-slate-800 dark:text-slate-200">Formal Reason:</span> {a.reason}
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="text-xs text-slate-400 py-4 text-center border border-dashed border-slate-200 rounded-lg">
-            No date revisions. Order is manufacturing on its initial contract date ({order.originalExFactoryDate || order.exFactoryDate}).
+          <div className="p-4 text-center text-xs text-slate-400 dark:text-slate-500 border border-dashed border-stone-200 dark:border-slate-800 rounded-xl">
+            Order remains on original contract schedule. Zero date adjustments.
           </div>
         )}
       </div>

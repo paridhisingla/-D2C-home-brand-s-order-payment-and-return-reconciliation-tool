@@ -17,7 +17,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
   const config = {
     GREEN: {
-      bg: 'bg-emerald-50/90 text-emerald-800 border-emerald-200/90 hover:bg-emerald-100/80',
+      bg: 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100/80 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-800/80',
       dot: 'bg-emerald-500',
       ping: 'bg-emerald-400',
       pulse: false,
@@ -25,7 +25,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       tamilLabel: 'சரியான நிலை',
     },
     AMBER: {
-      bg: 'bg-amber-50/90 text-amber-800 border-amber-200/90 hover:bg-amber-100/80',
+      bg: 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100/80 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800/80',
       dot: 'bg-amber-500',
       ping: 'bg-amber-400',
       pulse: true,
@@ -33,7 +33,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       tamilLabel: 'தாமத எச்சரிக்கை',
     },
     RED: {
-      bg: 'bg-rose-50/90 text-rose-800 border-rose-200/90 hover:bg-rose-100/80',
+      bg: 'bg-rose-50 text-rose-800 border-rose-200 hover:bg-rose-100/80 dark:bg-rose-950/70 dark:text-rose-300 dark:border-rose-800/80',
       dot: 'bg-rose-600',
       ping: 'bg-rose-400',
       pulse: true,
@@ -41,7 +41,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       tamilLabel: 'அபாய நிலை',
     },
   }[upper] || {
-    bg: 'bg-slate-50 text-slate-700 border-slate-200',
+    bg: 'bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
     dot: 'bg-slate-400',
     ping: 'bg-slate-300',
     pulse: false,
@@ -51,7 +51,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
   const sizeClasses = {
     sm: 'text-[11px] px-2 py-0.5 gap-1.5 font-medium',
-    md: 'text-xs px-2.5 py-1 gap-1.5 font-semibold',
+    md: 'text-xs px-2.5 py-1 gap-1.5 font-bold',
     lg: 'text-sm px-3.5 py-1.5 gap-2 font-bold',
   }[size];
 

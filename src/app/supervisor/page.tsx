@@ -118,7 +118,7 @@ export default function SupervisorMobilePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedOrderId || !quantityProduced) {
-      alert(lang === 'ta' ? 'தயவுசெய்து அளவை உள்ளிடவும்' : 'Please provide production quantity');
+      alert(lang === 'ta' ? 'ஆர்டர் மற்றும் அளவை உள்ளிடவும்' : 'Please select order and enter quantity');
       return;
     }
 
@@ -126,17 +126,21 @@ export default function SupervisorMobilePage() {
       orderId: selectedOrderId,
       stage,
       quantityProduced: Number(quantityProduced),
-      rejectedQuantity: Number(rejectedQuantity || 0),
-      originalTamilNote: tamilNote,
-      photoUrl: photoPreview || '/sample-photos/stitching-line-1.jpg',
-      supervisorId: 'user-super-1',
-      timestamp: new Date().toISOString(),
+      rejectedQuantity: Number(rejectedQuantity) || 0,
+      supervisorName: 'Muthusamy (Supervisor)',
+      originalTamilNote: tamilNote.trim(),
+      photoUrl: photoPreview || undefined,
+      clientUuid: `mobile-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`,
     };
 
-    // If offline or simulated network blip
-    if (!navigator.onLine || !isOnline) {
+    // If simulated offline, push to queue
+    if (!isOnline) {
       saveToOfflineQueue(payload);
-      setStatusMessage(lang === 'ta' ? 'ஆஃப்லைனில் சேமிக்கப்பட்டது (நெட்வொர்க் வரும்போது அனுப்பப்படும்)' : 'Saved offline! Will sync automatically.');
+      setStatusMessage(
+        lang === 'ta'
+          ? 'ஆஃப்லைன்: பதிவு போனில் சேமிக்கப்பட்டது (இணையம் வந்ததும் ஒத்திசைக்கப்படும்)'
+          : 'Offline Mode: Stored locally on device. Will sync when connection restores.'
+      );
       resetForm();
       return;
     }
@@ -229,9 +233,9 @@ export default function SupervisorMobilePage() {
 
       {/* Offline Queue Alert & 1-Click Sync */}
       {offlineQueue.length > 0 && (
-        <div className="p-3.5 rounded-2xl bg-amber-50/90 border border-amber-300 flex items-center justify-between shadow-xs">
-          <div className="flex items-center gap-2 text-xs text-amber-950 font-bold">
-            <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0" />
+        <div className="p-3.5 rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900/60 flex items-center justify-between shadow-xs">
+          <div className="flex items-center gap-2 text-xs text-amber-950 dark:text-amber-200 font-bold">
+            <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
             <span>
               {lang === 'ta'
                 ? `${offlineQueue.length} பதிவுகள் மொபைலில் காத்திருக்கின்றன`
@@ -254,23 +258,23 @@ export default function SupervisorMobilePage() {
 
       {/* Status Alert Banner */}
       {statusMessage && (
-        <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-300 text-xs font-bold text-emerald-950 flex items-center gap-2 shadow-xs">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+        <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-900/60 text-xs font-bold text-emerald-950 dark:text-emerald-200 flex items-center gap-2 shadow-xs">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
           <span>{statusMessage}</span>
         </div>
       )}
 
       {/* The Minimal Floor Entry Form */}
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-2xl border border-stone-200/90 dark:border-slate-800 p-5 shadow-xs space-y-4">
         {/* Order Selector */}
         <div>
-          <label className="block text-xs font-bold text-slate-800 mb-1">
+          <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
             {lang === 'ta' ? '1. ஆர்டரைத் தேர்வு செய்யவும் (PO Number)' : '1. Select Purchase Order (PO)'}
           </label>
           <select
             value={selectedOrderId}
             onChange={(e) => setSelectedOrderId(e.target.value)}
-            className="w-full text-sm font-semibold p-3 border border-slate-300 rounded-xl bg-slate-50 focus:ring-2 focus:ring-brand-500 shadow-2xs"
+            className="w-full text-xs font-bold p-3 border border-stone-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 shadow-2xs"
           >
             {orders.map((o) => (
               <option key={o.id} value={o.id}>
@@ -279,19 +283,19 @@ export default function SupervisorMobilePage() {
             ))}
           </select>
           {selectedOrder && (
-            <div className="mt-2 p-2 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between text-[11px] text-slate-600">
-              <span className="font-semibold text-slate-900">{selectedOrder.buyerName}</span>
-              <span className="font-mono text-slate-700">Ship: {selectedOrder.exFactoryDate}</span>
+            <div className="mt-2 p-2.5 bg-stone-50 dark:bg-slate-800/60 rounded-xl border border-stone-200/80 dark:border-slate-700 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
+              <span className="font-bold text-slate-900 dark:text-slate-100">{selectedOrder.buyerName}</span>
+              <span className="font-mono text-slate-700 dark:text-slate-300 font-bold">Ship: {selectedOrder.exFactoryDate}</span>
             </div>
           )}
         </div>
 
         {/* Stage Selector Chips */}
         <div>
-          <label className="block text-xs font-bold text-slate-800 mb-1.5">
+          <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
             {lang === 'ta' ? '2. உற்பத்தி நிலை (Stage)' : '2. Production Stage'}
           </label>
-          <div className="grid grid-cols-3 gap-1.5">
+          <div className="grid grid-cols-3 gap-2">
             {[
               { id: 'Knitting', label: lang === 'ta' ? 'பின்னல்' : 'Knitting' },
               { id: 'Printing', label: lang === 'ta' ? 'பிரிண்டிங்' : 'Printing' },
@@ -307,7 +311,7 @@ export default function SupervisorMobilePage() {
                 className={`py-2 px-1.5 rounded-xl text-xs font-bold text-center border transition ${
                   stage === s.id
                     ? 'bg-brand-600 text-white border-brand-600 shadow-xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    : 'bg-stone-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-700'
                 }`}
               >
                 {s.label}
@@ -319,8 +323,8 @@ export default function SupervisorMobilePage() {
         {/* Quantities: Produced & Rejected with Quick Increment Chips */}
         <div className="space-y-2">
           <div className="grid grid-cols-2 gap-3">
-            <div className="p-3 bg-emerald-50/60 rounded-2xl border border-emerald-200">
-              <label className="block text-[11px] font-bold text-emerald-950 mb-1">
+            <div className="p-3 bg-emerald-50/70 dark:bg-emerald-950/30 rounded-2xl border border-emerald-200 dark:border-emerald-900/60">
+              <label className="block text-[11px] font-bold text-emerald-950 dark:text-emerald-200 mb-1">
                 {lang === 'ta' ? 'உற்பத்தி அளவு (Pieces)' : 'Pieces Done Today'}
               </label>
               <input
@@ -329,12 +333,12 @@ export default function SupervisorMobilePage() {
                 min="1"
                 value={quantityProduced}
                 onChange={(e) => setQuantityProduced(e.target.value)}
-                className="w-full text-xl font-black p-2.5 bg-white border border-emerald-300 rounded-xl text-slate-900 focus:ring-2 focus:ring-emerald-500 text-center shadow-2xs"
+                className="w-full text-xl font-black p-2 bg-white dark:bg-slate-800 border border-emerald-300 dark:border-emerald-800 rounded-xl text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500 text-center shadow-2xs"
               />
             </div>
 
-            <div className="p-3 bg-rose-50/60 rounded-2xl border border-rose-200">
-              <label className="block text-[11px] font-bold text-rose-950 mb-1">
+            <div className="p-3 bg-rose-50/70 dark:bg-rose-950/30 rounded-2xl border border-rose-200 dark:border-rose-900/60">
+              <label className="block text-[11px] font-bold text-rose-950 dark:text-rose-200 mb-1">
                 {lang === 'ta' ? 'குறைபாடு / ரிஜெக்ட்' : 'Defects / Rejection'}
               </label>
               <input
@@ -342,21 +346,21 @@ export default function SupervisorMobilePage() {
                 min="0"
                 value={rejectedQuantity}
                 onChange={(e) => setRejectedQuantity(e.target.value)}
-                className="w-full text-xl font-black p-2.5 bg-white border border-rose-300 rounded-xl text-slate-900 focus:ring-2 focus:ring-rose-500 text-center shadow-2xs"
+                className="w-full text-xl font-black p-2 bg-white dark:bg-slate-800 border border-rose-300 dark:border-rose-800 rounded-xl text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-rose-500 text-center shadow-2xs"
               />
             </div>
           </div>
 
           {/* Quick Increment Touch Targets for Factory Touchscreens */}
           <div className="flex items-center justify-between gap-1 pt-1">
-            <span className="text-[10px] font-bold text-slate-400 uppercase">Quick Add:</span>
+            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase">Quick Add:</span>
             <div className="flex gap-1.5">
               {[50, 100, 250, 500].map((num) => (
                 <button
                   key={num}
                   type="button"
                   onClick={() => adjustQty(num)}
-                  className="px-2 py-1 rounded-lg bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-900 text-xs font-bold border border-slate-200 transition"
+                  className="px-2 py-1 rounded-lg bg-stone-100 dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-emerald-950/50 text-slate-700 dark:text-slate-200 hover:text-emerald-900 dark:hover:text-emerald-300 text-xs font-bold border border-stone-200 dark:border-slate-700 transition"
                 >
                   +{num}
                 </button>
@@ -367,12 +371,12 @@ export default function SupervisorMobilePage() {
 
         {/* Floor Photo Proof */}
         <div>
-          <label className="block text-xs font-bold text-slate-800 mb-1">
+          <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
             {lang === 'ta' ? '3. புகைப்பட ஆதாரம் (Photo Evidence)' : '3. Floor Photo Evidence'}
           </label>
           <div className="flex items-center gap-3">
-            <label className="flex-1 cursor-pointer flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-dashed border-slate-300 hover:border-brand-500 bg-slate-50 text-slate-700 text-xs font-bold transition">
-              <Camera className="w-5 h-5 text-brand-600" />
+            <label className="flex-1 cursor-pointer flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-stone-300 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 bg-stone-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition">
+              <Camera className="w-5 h-5 text-brand-600 dark:text-brand-400" />
               <span>
                 {photoPreview
                   ? lang === 'ta'
@@ -393,7 +397,7 @@ export default function SupervisorMobilePage() {
           </div>
 
           {photoPreview && (
-            <div className="mt-2 relative rounded-2xl overflow-hidden border border-slate-200 h-28 bg-slate-100 flex items-center justify-center shadow-xs">
+            <div className="mt-2 relative rounded-xl overflow-hidden border border-stone-200 dark:border-slate-700 h-28 bg-stone-100 dark:bg-slate-800 flex items-center justify-center shadow-xs">
               <img
                 src={photoPreview}
                 alt="Captured piece"
@@ -407,8 +411,8 @@ export default function SupervisorMobilePage() {
         </div>
 
         {/* Voice Note & Issue Text in Tamil */}
-        <div className="space-y-2 pt-2 border-t border-slate-100">
-          <label className="block text-xs font-bold text-slate-800">
+        <div className="space-y-2 pt-2 border-t border-stone-100 dark:border-slate-800">
+          <label className="block text-xs font-bold text-slate-800 dark:text-slate-200">
             {lang === 'ta' ? '4. தாமத காரணம் / குறிப்பு (குரல் அல்லது தமிழ்)' : '4. Floor Issue Note (Tamil or Voice)'}
           </label>
 
@@ -428,7 +432,7 @@ export default function SupervisorMobilePage() {
             }
             value={tamilNote}
             onChange={(e) => setTamilNote(e.target.value)}
-            className="w-full text-xs p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 leading-relaxed font-sans shadow-2xs"
+            className="w-full text-xs p-3 border border-stone-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 leading-relaxed font-sans shadow-2xs"
           />
         </div>
 
@@ -453,7 +457,7 @@ export default function SupervisorMobilePage() {
       <div className="text-center pt-1">
         <Link
           href="/review"
-          className="text-xs text-brand-600 hover:text-brand-800 font-semibold inline-flex items-center gap-1 underline"
+          className="text-xs text-brand-600 dark:text-brand-400 hover:text-brand-800 dark:hover:text-brand-300 font-bold inline-flex items-center gap-1 underline"
         >
           <span>Merchandiser: Open AI Review Queue</span>
           <ArrowRight className="w-3.5 h-3.5" />

@@ -57,7 +57,7 @@ export const TamilVoiceRecorder: React.FC<TamilVoiceRecorderProps> = ({
   const toggleRecording = () => {
     if (!isRecording) {
       setIsRecording(true);
-      // Auto-simulate transcription after 3 seconds of talking
+      // Auto-simulate transcription after 2.5 seconds of talking
       setTimeout(() => {
         setIsRecording(false);
         const selected = presets[activePresetIndex % presets.length];
@@ -80,9 +80,9 @@ export const TamilVoiceRecorder: React.FC<TamilVoiceRecorderProps> = ({
         <button
           type="button"
           onClick={toggleRecording}
-          className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all shadow-sm ${
+          className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs transition-all shadow-xs ${
             isRecording
-              ? 'bg-rose-600 text-white animate-pulse ring-4 ring-rose-200'
+              ? 'bg-rose-600 text-white animate-pulse ring-4 ring-rose-200 dark:ring-rose-900/60'
               : 'bg-brand-600 hover:bg-brand-700 text-white'
           }`}
         >
@@ -106,27 +106,27 @@ export const TamilVoiceRecorder: React.FC<TamilVoiceRecorderProps> = ({
             <span className="w-1.5 h-4 bg-rose-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
             <span className="w-1.5 h-6 bg-rose-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
             <span className="w-1.5 h-3 bg-rose-500 rounded-full animate-bounce" />
-            <span className="text-xs text-rose-600 font-medium ml-2">Listening in Tamil...</span>
+            <span className="text-xs text-rose-600 dark:text-rose-400 font-semibold ml-2">Listening in Tamil...</span>
           </div>
         )}
       </div>
 
       {/* Quick Factory Presets for Instant One-Tap Testing */}
       <div>
-        <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-          <Sparkles className="w-3 h-3 text-amber-500" />
+        <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
           <span>{lang === 'ta' ? 'விரைவு தமிழ் மாதிரி குறிப்புகள் (தட்டவும்):' : 'One-Tap Tamil Voice/Floor Presets:'}</span>
         </div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           {presets.map((p, idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => handleSelectPreset(p.tamil)}
-              className="text-left text-xs bg-slate-100 hover:bg-brand-50 hover:border-brand-300 border border-slate-200 text-slate-700 hover:text-brand-800 px-2.5 py-1.5 rounded-lg transition"
+              className="text-left text-xs bg-stone-100/90 dark:bg-slate-800 hover:bg-brand-50 dark:hover:bg-slate-700 hover:border-brand-300 dark:hover:border-slate-600 border border-stone-200/90 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-brand-800 dark:hover:text-brand-300 px-3 py-2 rounded-xl transition shadow-2xs"
             >
-              <div className="font-medium truncate max-w-[260px]">{p.tamil}</div>
-              <div className="text-[10px] text-slate-400">{p.category}</div>
+              <div className="font-semibold truncate max-w-[280px]">{p.tamil}</div>
+              <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{p.category}</div>
             </button>
           ))}
         </div>
