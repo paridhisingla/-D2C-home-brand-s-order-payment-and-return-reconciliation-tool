@@ -492,5 +492,8 @@ export async function getUnits() {
 export async function resetDatabase() {
   globalStore.initialized = false;
   initializeStore();
-  return { message: 'Database reset and seeded with client sample data.' };
+  return {
+    message: 'Database reset and seeded with client sample data.',
+    ordersCount: globalStore.orders.length,
+  };
 }

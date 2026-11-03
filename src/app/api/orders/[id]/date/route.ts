@@ -22,7 +22,11 @@ export async function POST(
       changedByName: body.changedByName || 'Karthik Subramanian (Merchandiser)',
     });
 
-    return NextResponse.json({ success: true, ...result });
+    return NextResponse.json({
+      success: true,
+      order: result.updatedOrder,
+      ...result,
+    });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message || 'Failed to update date' },

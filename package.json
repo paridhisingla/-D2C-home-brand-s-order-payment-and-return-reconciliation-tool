@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --test tests/runRateEngine.test.mjs tests/aiClassifier.test.mjs tests/buyerIsolation.test.mjs tests/auditCompliance.test.mjs tests/expressBackend.test.mjs",
+    "test": "node --test tests/runRateEngine.test.mjs tests/aiClassifier.test.mjs tests/buyerIsolation.test.mjs tests/auditCompliance.test.mjs tests/expressBackend.test.mjs tests/buttonsAudit.test.mjs",
     "server": "node server/server.js",
     "server:seed": "node server/seed.js",
     "db:push": "prisma db push",
