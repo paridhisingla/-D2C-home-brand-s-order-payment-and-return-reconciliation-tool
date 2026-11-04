@@ -5,6 +5,7 @@ interface LogoProps {
   showText?: boolean;
   className?: string;
   subtext?: string;
+  subtextClassName?: string;
 }
 
 export const Logo: React.FC<LogoProps> = ({
@@ -12,6 +13,7 @@ export const Logo: React.FC<LogoProps> = ({
   showText = true,
   className = '',
   subtext = 'Production & TNA Engine',
+  subtextClassName = '',
 }) => {
   const iconDimensions = {
     sm: 'w-7 h-7 text-xs',
@@ -60,7 +62,7 @@ export const Logo: React.FC<LogoProps> = ({
             <span className="text-brand-600 dark:text-teal-400 font-extrabold">Tiruppur</span>
           </div>
           {subtext && (
-            <span className="block text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
+            <span className={`block text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider ${subtextClassName}`}>
               {subtext}
             </span>
           )}

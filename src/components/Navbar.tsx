@@ -124,7 +124,7 @@ export const Navbar = () => {
     {
       href: '/orders',
       label: lang === 'ta' ? 'ஆர்டர் போர்டு' : 'Order Board',
-      shortLabel: 'Order Board',
+      shortLabel: lang === 'ta' ? 'ஆர்டர்கள்' : 'Orders',
       icon: Layers,
       primaryRole: 'MERCHANDISER',
       roleLabel: 'Merchandiser',
@@ -132,7 +132,7 @@ export const Navbar = () => {
     {
       href: '/orders/new',
       label: lang === 'ta' ? 'புதிய ஆர்டர்' : 'Setup Order',
-      shortLabel: 'Setup Order',
+      shortLabel: lang === 'ta' ? 'புதிய PO' : 'New PO',
       icon: PlusCircle,
       primaryRole: 'MERCHANDISER',
       roleLabel: 'Merchandiser',
@@ -140,7 +140,7 @@ export const Navbar = () => {
     {
       href: '/supervisor',
       label: lang === 'ta' ? 'யூனிட் தளம்' : 'Supervisor Floor',
-      shortLabel: 'Supervisor Floor',
+      shortLabel: lang === 'ta' ? 'தளம்' : 'Floor',
       icon: Smartphone,
       badge: lang === 'ta' ? 'தமிழ்' : 'Tamil/Mobile',
       primaryRole: 'SUPERVISOR',
@@ -149,7 +149,7 @@ export const Navbar = () => {
     {
       href: '/review',
       label: lang === 'ta' ? 'AI சரிபார்ப்பு' : 'AI Review Queue',
-      shortLabel: 'AI Review Queue',
+      shortLabel: lang === 'ta' ? 'சரிபார்ப்பு' : 'Review',
       icon: CheckSquare,
       primaryRole: 'MERCHANDISER',
       roleLabel: 'Merchandiser',
@@ -157,7 +157,7 @@ export const Navbar = () => {
     {
       href: currentRole === 'BUYER_C' ? '/buyer?company=buyer-c-de' : '/buyer?company=buyer-b-uk',
       label: currentRole === 'BUYER_C' ? (lang === 'ta' ? 'பையர் போர்டல் (DE)' : 'Buyer Portal (DE)') : (lang === 'ta' ? 'பையர் போர்டல் (UK)' : 'Buyer Portal (UK)'),
-      shortLabel: currentRole === 'BUYER_C' ? 'Buyer Portal (DE)' : 'Buyer Portal (UK)',
+      shortLabel: currentRole === 'BUYER_C' ? (lang === 'ta' ? 'பையர் DE' : 'Buyer DE') : (lang === 'ta' ? 'பையர் UK' : 'Buyer UK'),
       icon: Eye,
       primaryRole: currentRole === 'BUYER_C' ? 'BUYER_C' : 'BUYER_B',
       roleLabel: currentRole === 'BUYER_C' ? 'Buyer (DE)' : 'Buyer (UK)',
@@ -165,7 +165,7 @@ export const Navbar = () => {
     {
       href: '/executive',
       label: lang === 'ta' ? 'நிர்வாக அறிக்கை' : 'MD Overview',
-      shortLabel: 'MD Overview',
+      shortLabel: lang === 'ta' ? 'நிர்வாகம்' : 'MD View',
       icon: TrendingUp,
       primaryRole: 'MD',
       roleLabel: 'Managing Director',
@@ -173,37 +173,37 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white dark:bg-slate-900 border-b border-stone-200/90 dark:border-slate-800 sticky top-0 z-50 shadow-2xs transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+    <nav className="w-full max-w-full bg-white dark:bg-slate-900 border-b border-stone-200/90 dark:border-slate-800 sticky top-0 z-50 shadow-2xs transition-colors duration-200 overflow-x-clip">
+      <div className="w-full max-w-[1700px] mx-auto px-2 sm:px-4 lg:px-3 xl:px-6">
+        <div className="flex items-center justify-between h-16 gap-1 lg:gap-2">
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-4 xl:gap-6">
-            <Link href="/" className="flex items-center group">
-              <Logo size="md" subtext="Production & TNA Engine" />
+          <div className="flex items-center gap-2 xl:gap-4 flex-shrink-0">
+            <Link href="/" className="flex items-center group flex-shrink-0">
+              <Logo size="md" subtext="Production & TNA Engine" subtextClassName="hidden 2xl:block" />
             </Link>
 
             {/* Desktop Navigation Links (All 6 core buttons) */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center space-x-0.5 xl:space-x-1">
               {navLinks.map((item) => {
                 const Icon = item.icon;
                 const isActive = pathname === item.href || (item.href.includes('?') && pathname === item.href.split('?')[0]);
-                const isRolePrimary = currentRole === item.primaryRole;
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     title={`${item.label} (${item.roleLabel})`}
-                    className={`inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                    className={`inline-flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                       isActive
                         ? 'bg-brand-50 text-brand-700 dark:bg-brand-950/70 dark:text-teal-400 shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-stone-100/70 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-brand-600 dark:text-teal-400' : 'text-slate-400 dark:text-slate-400'}`} />
-                    <span className="truncate">{item.label}</span>
+                    <Icon className={`w-3.5 h-3.5 xl:w-4 xl:h-4 flex-shrink-0 ${isActive ? 'text-brand-600 dark:text-teal-400' : 'text-slate-400 dark:text-slate-400'}`} />
+                    <span className="hidden xl:inline">{item.label}</span>
+                    <span className="inline xl:hidden">{item.shortLabel}</span>
                     {item.badge && (
-                      <span className="hidden xl:inline-block ml-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 rounded-md">
+                      <span className="hidden 2xl:inline-block ml-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 rounded-md">
                         {item.badge}
                       </span>
                     )}
@@ -214,23 +214,23 @@ export const Navbar = () => {
           </div>
 
           {/* Right Controls: Role Switcher, Dark Mode, Language, Auth */}
-          <div className="hidden sm:flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-1.5 xl:gap-2 flex-shrink-0">
             {/* Quick Role Switcher Pill */}
-            <div className="flex items-center bg-stone-100 dark:bg-slate-800 p-1 rounded-xl text-xs border border-stone-200/80 dark:border-slate-700">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 px-2 flex items-center gap-1">
+            <div className="flex items-center bg-stone-100 dark:bg-slate-800 p-0.5 sm:p-1 rounded-xl text-xs border border-stone-200/80 dark:border-slate-700 flex-shrink-0">
+              <span className="hidden 2xl:flex items-center gap-1 text-[11px] font-bold text-slate-500 dark:text-slate-400 px-1.5">
                 <UserCheck className="w-3.5 h-3.5 text-slate-600 dark:text-slate-300" />
                 Role:
               </span>
               <select
                 value={currentRole}
                 onChange={(e) => handleRoleChange(e.target.value)}
-                className="bg-white dark:bg-slate-900 border-0 text-slate-800 dark:text-slate-100 font-bold text-xs rounded-lg px-2.5 py-1.5 shadow-2xs focus:ring-2 focus:ring-brand-500 cursor-pointer"
+                className="bg-white dark:bg-slate-900 border-0 text-slate-800 dark:text-slate-100 font-bold text-xs rounded-lg px-2 py-1 shadow-2xs focus:ring-2 focus:ring-brand-500 cursor-pointer max-w-[125px] xl:max-w-[155px]"
               >
-                <option value="MERCHANDISER">👔 Merchandiser (Order Board)</option>
-                <option value="SUPERVISOR">📱 Floor Supervisor (Tamil)</option>
-                <option value="BUYER_B">🇬🇧 Buyer: Company B (UK)</option>
-                <option value="BUYER_C">🇩🇪 Buyer: Company C (Germany)</option>
-                <option value="MD">📊 Managing Director (MD View)</option>
+                <option value="MERCHANDISER">👔 Merchandiser</option>
+                <option value="SUPERVISOR">📱 Supervisor</option>
+                <option value="BUYER_B">🇬🇧 Buyer (UK)</option>
+                <option value="BUYER_C">🇩🇪 Buyer (DE)</option>
+                <option value="MD">📊 MD View</option>
               </select>
             </div>
 
@@ -239,7 +239,7 @@ export const Navbar = () => {
               onClick={toggleDarkMode}
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700 transition shadow-2xs"
+              className="p-1.5 xl:p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700 transition shadow-2xs flex-shrink-0"
             >
               {isDark ? (
                 <Sun className="w-4 h-4 text-amber-400" />
@@ -252,23 +252,23 @@ export const Navbar = () => {
             <button
               onClick={toggleLanguage}
               title="Toggle Tamil / English Interface"
-              className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-xl border border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition shadow-2xs"
+              className="inline-flex items-center gap-1 text-xs font-bold px-2 py-1.5 rounded-xl border border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition shadow-2xs flex-shrink-0"
             >
               <Globe className="w-3.5 h-3.5 text-brand-600 dark:text-teal-400" />
-              <span>{lang === 'en' ? 'தமிழ்' : 'English'}</span>
+              <span className="text-[11px] font-bold">{lang === 'en' ? 'தமிழ்' : 'EN'}</span>
             </button>
 
             {/* Login & Signup buttons */}
             <Link
               href="/login"
-              className="text-xs font-bold px-2.5 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-brand-700 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-slate-800 transition"
+              className="hidden lg:inline-flex text-xs font-bold px-2 py-1 rounded-lg text-slate-700 dark:text-slate-300 hover:text-brand-700 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-slate-800 transition flex-shrink-0"
             >
               Log In
             </Link>
 
             <Link
               href="/signup"
-              className="text-xs font-extrabold px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-xs hover:shadow transition"
+              className="hidden lg:inline-flex text-xs font-extrabold px-2.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white shadow-xs hover:shadow transition flex-shrink-0"
             >
               Sign Up
             </Link>
@@ -278,14 +278,14 @@ export const Navbar = () => {
               onClick={handleResetData}
               disabled={isResetting}
               title="Reset sample data"
-              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-xl transition"
+              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-xl transition flex-shrink-0"
             >
-              <RotateCcw className={`w-4 h-4 ${isResetting ? 'animate-spin' : ''}`} />
+              <RotateCcw className={`w-3.5 h-3.5 ${isResetting ? 'animate-spin' : ''}`} />
             </button>
           </div>
 
           {/* Mobile menu trigger */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-1.5 lg:hidden">
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg text-slate-600 dark:text-slate-300 border border-stone-200 dark:border-slate-700"
@@ -304,7 +304,7 @@ export const Navbar = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-6 space-y-3">
+        <div className="lg:hidden border-t border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-6 space-y-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="p-2.5 bg-stone-50 dark:bg-slate-800 rounded-xl border border-stone-200 dark:border-slate-700">
             <div className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5">
               <UserCheck className="w-3.5 h-3.5 text-brand-600 dark:text-teal-400" />
