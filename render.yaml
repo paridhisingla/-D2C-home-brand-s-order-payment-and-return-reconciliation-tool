@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: knittrack-tiruppur
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_TELEMETRY_DISABLED
+        value: 1
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true

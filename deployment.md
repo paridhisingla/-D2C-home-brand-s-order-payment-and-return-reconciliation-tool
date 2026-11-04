@@ -58,10 +58,58 @@ Server starts on [http://localhost:5000](http://localhost:5000) with Helmet, Exp
 
 ---
 
-## 2. Cloud Deployment & Environment Variables
+## 2. Cloud Deployment on Render (render.com)
 
-### Production Hosting Platform
-The application is optimized for deployment on **Vercel**, **AWS Amplify**, or **Railway/Render**:
+Render provides free cloud hosting with automated continuous deployment on every git push.
+
+### Method A: 1-Click Blueprint Deployment (Recommended)
+This repository includes a [`render.yaml`](./render.yaml) file for automated Infrastructure-as-Code setup:
+1. Log in to your [Render Dashboard](https://dashboard.render.com/).
+2. Click **New +** at the top right and select **Blueprint**.
+3. Connect your GitHub repository:
+   `https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view.git`
+4. Render will automatically detect `render.yaml` and configure:
+   - **Service Type**: Web Service
+   - **Environment**: Node (v20)
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm run start`
+5. Click **Apply**. Render will build and deploy the application live with an SSL HTTPS URL (e.g. `https://knittrack-tiruppur.onrender.com`).
+
+---
+
+### Method B: Manual Web Service Setup on Render
+If setting up manually without blueprints:
+1. Go to [Render Dashboard](https://dashboard.render.com/) and click **New +** → **Web Service**.
+2. Select **Build and deploy from a Git repository** and connect your GitHub repo.
+3. Configure the following fields:
+   - **Name**: `knittrack-tiruppur` (or your preferred name)
+   - **Region**: Any (e.g., `Oregon (US West)` or `Frankfurt (EU)`)
+   - **Branch**: `main`
+   - **Runtime**: `Node`
+   - **Build Command**:
+     ```bash
+     npm install && npm run build
+     ```
+   - **Start Command**:
+     ```bash
+     npm run start
+     ```
+   - **Instance Type**: `Free`
+4. Under **Environment Variables**, add:
+   - `NODE_VERSION` = `20`
+   - `NODE_ENV` = `production`
+   - `NEXT_TELEMETRY_DISABLED` = `1`
+   - `JWT_SECRET` = (Click **Generate** or type any random 32-character secret)
+   - *(Optional)* `MONGODB_URI` = Your MongoDB Atlas connection string (if using external Atlas cluster)
+5. Click **Create Web Service**.
+6. Wait 2-3 minutes for the build to finish. Your app will be live at `https://<your-service-name>.onrender.com`!
+
+---
+
+## 3. Other Cloud Hosting Options & Environment Variables
+
+### Production Hosting Alternatives
+The application is also optimized for deployment on **Vercel**, **AWS Amplify**, or **Railway**:
 - **Framework Preset**: Next.js (App Router)
 - **Build Command**: `npm run build`
 - **Output Directory**: `.next`
