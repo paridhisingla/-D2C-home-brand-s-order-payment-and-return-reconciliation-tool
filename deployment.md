@@ -34,11 +34,11 @@ The project provides dual database support:
   Pre-seeded out-of-the-box with `B-PO-88213`, `B-PO-88240`, `C-PO-0488`.
 
 ### Step 4: Run Automated Tests
-Execute the full test suite (24 tests) covering Run-Rate Math, Tamil NLP Classifier, Buyer Tenant Isolation, Date Change Audits, and Express Zod / Auth / Idempotency validation:
+Execute the full test suite (35 automated unit, mathematical, and integration tests) covering Run-Rate Math, Tamil NLP Classifier, Buyer Tenant Isolation, Date Change Audits, Button Functional Audit, and Express Zod / Auth / Idempotency validation:
 ```bash
 npm test
 ```
-*Expected result:* 24/24 tests passing (~400ms).
+*Expected result:* **35/35 tests passing** (~450ms).
 
 ### Step 5: Start Servers
 
@@ -130,7 +130,7 @@ The application is also optimized for deployment on **Vercel**, **AWS Amplify**,
 
 ---
 
-## 3. Reviewer Demo Credentials & Role Navigation
+## 4. Reviewer Demo Credentials & Role Navigation
 
 The application provides three seamless ways to test all user roles:
 1. **Dedicated Sign-In Page**: [`http://localhost:3000/login`](http://localhost:3000/login) with one-click reviewer persona cards and standard email/password or Buyer PIN verification.
@@ -144,6 +144,28 @@ The application provides three seamless ways to test all user roles:
 | **Buyer: Company B (UK)** | Sarah Jenkins (`sarah.j@companyb-fashion.co.uk`) | `demo123` | Strictly isolated view of Company B orders only (`B-PO-88213`, `B-PO-88240`), TNA milestones, verified floor photos, date change compliance history, CSV export |
 | **Buyer: Company C (Germany)** | Klaus Weber (`klaus.w@companyc-retail.de`) | `demo123` | Strictly isolated view of Company C orders only (`C-PO-0488`), zero cross-buyer leakage |
 | **Managing Director (MD)** | V. Sundaram (`md@tiruppurknitwear.com`) | `demo123` | Executive Dashboard: ₹1.08 Crore annual loss tracking, live ₹ exposure at risk, unit capacity utilization |
+
+---
+
+## 5. Comprehensive Button & Action Functional Audit
+
+All 11 user-facing buttons and form submissions are covered by integration tests (`tests/buttonsAudit.test.mjs`):
+
+| # | UI Button / Action | Target Endpoint | Functional Role | Automated Test Status |
+|---|---|---|---|---|
+| 1 | **Reset Sample Data** | `POST /api/seed` | Restores pristine 3-order state | Passed |
+| 2 | **Sign In (Login)** | `POST /api/auth/login` | JWT session issuance | Passed |
+| 3 | **Buyer PIN Access** | `POST /api/auth/buyer-access` | PIN lookup (`BUYER-B-2026`) | Passed |
+| 4 | **Create Account** | `POST /api/auth/register` | Provisions new factory staff | Passed |
+| 5 | **Setup Order** | `POST /api/orders` | Creates PO with TNA matrix | Passed |
+| 6 | **Supervisor Submit** | `POST /api/logs` | Logs floor output & photo | Passed |
+| 7 | **Confirm & Publish** | `POST /api/logs/:id/confirm` | AI Review Queue publication | Passed |
+| 8 | **Revise Date** | `POST /api/orders/:id/date` | Compliance audit log | Passed |
+| 9 | **Export CSV** | `GET /api/export` | Download buyer PO report | Passed |
+| 10 | **Status Filter Pills** | Filter state | Green / Amber / Red filtering | Passed |
+| 11 | **Tamil Voice NLP** | `POST /api/ai/classify` | AI voice note classification | Passed |
+
+---
 
 ### Quick Actions for Reviewers:
 1. **Reset to Clean Sample Data**: Click the **Rotate/Reset** icon in the top right navbar at any time to instantly restore the pristine client sample state.

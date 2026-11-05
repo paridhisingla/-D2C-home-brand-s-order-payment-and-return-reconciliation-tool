@@ -1,11 +1,13 @@
 # Technical Design Document (TDD)
 ## KnitTrack Tiruppur: Production & TNA Delay Warning Engine
 
-**Project Repository:** [https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view](https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view)  
-**Live Application URL:** [https://knittrack-tiruppur.vercel.app](https://knittrack-tiruppur.vercel.app)  
-**Client:** Company A, Tiruppur (Knitwear Exporter to UK and EU Buyers)  
-**Author:** Software Engineering Team  
-**Date:** November 2026  
+- **GitHub Repository URL:** [https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view](https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view)
+- **Git Clone Command:** `git clone https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view.git`
+- **Live Deployment URL:** [https://knittrack-tiruppur.vercel.app](https://knittrack-tiruppur.vercel.app)
+- **Client:** Company A, Tiruppur (Knitwear Exporter to UK and EU Buyers)
+- **Author:** Software Engineering Team
+- **Date:** November 2026
+- **Automated Verification:** 35/35 Automated Tests Passing (Run-Rate Math, Tamil NLP, Tenant Isolation, Button Audits)  
 
 ---
 

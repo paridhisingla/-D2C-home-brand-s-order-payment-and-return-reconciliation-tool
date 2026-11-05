@@ -37,3 +37,6 @@ next-env.d.ts
 /prisma/*.db
 /prisma/*.db-journal
 prisma/dev.db
+
+# Large generated source archives
+knittrack_complete_project.zip
