@@ -1,7 +1,7 @@
 # Technical Design Document (TDD)
 ## ReconTex: D2C Multi-Channel Reconciliation & Revenue Leakage Recovery OS
 
-- **GitHub Repository URL:** [https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view](https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view)
+- **GitHub Repository URL:** [https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool](https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool)
 - **Live Deployment URL:** [https://recontex-bengaluru.vercel.app](https://recontex-bengaluru.vercel.app)
 - **Client:** Company A, Bengaluru (D2C Home Textiles Brand: Own Website + 3 Marketplaces + 2 Quick-Commerce Apps)
 - **Author:** Software Engineering Team

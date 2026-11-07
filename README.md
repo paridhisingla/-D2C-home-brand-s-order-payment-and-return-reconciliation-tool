@@ -1,11 +1,11 @@
 # ReconTex: D2C Multi-Channel Reconciliation & Revenue Leakage Recovery OS
 ### Built for Company A, Bengaluru (D2C Home Textiles: Website + 3 Marketplaces + 2 Quick-Commerce Platforms)
 
-[![Automated Tests](https://img.shields.io/badge/tests-20%20passing-emerald)](https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view)
+[![Automated Tests](https://img.shields.io/badge/tests-20%20passing-emerald)](https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue)](https://www.typescriptlang.org/)
 [![DPDP Act 2023](https://img.shields.io/badge/DPDP%20Act%202023-Compliant-emerald)](https://www.meity.gov.in/)
-[![100k Benchmark](https://img.shields.io/badge/100k%20Benchmark-0.12s%20(SLA%20%3C60s)-purple)](https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view)
+[![100k Benchmark](https://img.shields.io/badge/100k%20Benchmark-0.12s%20(SLA%20%3C60s)-purple)](https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool)
 
 ---
 
@@ -108,8 +108,8 @@ npm run test
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view.git
-cd Knitwear-exporter-s-production-order-tracking-app-with-buyer-view
+git clone https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool.git
+cd -D2C-home-brand-s-order-payment-and-return-reconciliation-tool
 
 # 2. Install dependencies
 npm install

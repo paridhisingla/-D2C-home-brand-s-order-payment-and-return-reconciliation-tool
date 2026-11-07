@@ -43,7 +43,7 @@ def create_tdd_document():
     table_meta = doc.add_table(rows=5, cols=2)
     table_meta.alignment = WD_TABLE_ALIGNMENT.CENTER
     meta_data = [
-        ("GitHub Repository URL", "https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view"),
+        ("GitHub Repository URL", "https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool"),
         ("Live Deployment URL", "https://recontex-bengaluru.vercel.app"),
         ("Client", "Company A, Bengaluru (D2C Home Textiles Brand: Website, 3 Marketplaces, 2 Quick-Commerce)"),
         ("Author & Role", "Software Engineering Team | Candidate Submission"),

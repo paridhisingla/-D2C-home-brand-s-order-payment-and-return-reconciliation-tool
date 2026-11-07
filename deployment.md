@@ -1,7 +1,7 @@
 # Deployment & Local Run Guide
 ## ReconTex: D2C Multi-Channel Reconciliation & Revenue Leakage Recovery OS
 
-- **GitHub Repository URL:** [https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view](https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view)
+- **GitHub Repository URL:** [https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool](https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool)
 - **Live Deployment URL:** [https://recontex-bengaluru.vercel.app](https://recontex-bengaluru.vercel.app)
 - **Client:** Company A, Bengaluru (D2C Home Textiles Brand)
 - **Author:** Software Engineering Team
@@ -18,8 +18,8 @@
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/paridhisingla/Knitwear-exporter-s-production-order-tracking-app-with-buyer-view.git
-cd Knitwear-exporter-s-production-order-tracking-app-with-buyer-view
+git clone https://github.com/paridhisingla/-D2C-home-brand-s-order-payment-and-return-reconciliation-tool.git
+cd -D2C-home-brand-s-order-payment-and-return-reconciliation-tool
 ```
 
 ### Step 2: Install Dependencies
