@@ -8,155 +8,127 @@ generator client {
 }
 
 model User {
-  id                 String              @id @default(cuid())
-  email              String              @unique
+  id                 String       @id @default(cuid())
+  email              String       @unique
   name               String
-  passwordHash       String              @default("demo123")
-  role               String              // "MERCHANDISER" | "SUPERVISOR" | "BUYER" | "MD"
-  languagePreference String              @default("ta") // "ta" | "en"
-  buyerCompanyId     String?
-  buyerCompany       BuyerCompany?       @relation(fields: [buyerCompanyId], references: [id])
-  unitId             String?
-  unit               Unit?               @relation(fields: [unitId], references: [id])
-  logsCreated        DailyProductionLog[]
-  auditsCreated      DateChangeAudit[]
-  createdAt          DateTime            @default(now())
-}
-
-model BuyerCompany {
-  id            String              @id @default(cuid())
-  name          String              // e.g. "Company B (UK)", "Company C (Germany)"
-  country       String              // "UK", "Germany", etc.
-  code          String              @unique // "CMP-B", "CMP-C"
-  contactEmail  String
-  accessPin     String              @default("BUYER2026")
-  orders        Order[]
-  users         User[]
-  notifications BuyerNotification[]
-  createdAt     DateTime            @default(now())
-}
-
-model Unit {
-  id                  String               @id @default(cuid())
-  name                String               // "Unit 1 - Arulpuram", "Subcontract - Murugan Printing"
-  type                String               // "OWN_FACTORY" | "SUBCONTRACT_PRINTING" | "SUBCONTRACT_WASHING"
-  location            String               @default("Tiruppur")
-  dailyCapacityPieces Int                  @default(1500)
-  orders              Order[]
-  users               User[]
-  logs                DailyProductionLog[]
-  createdAt           DateTime             @default(now())
+  passwordHash       String       @default("demo123")
+  role               String       // "FINANCE_EXECUTIVE" | "CO_FOUNDER" | "RETURNS_MANAGER"
+  department         String       @default("Finance")
+  createdAt          DateTime     @default(now())
 }
 
 model Order {
-  id                      String                 @id @default(cuid())
-  poNumber                String                 @unique // e.g. "B-PO-88213"
-  buyerCompanyId          String
-  buyerCompany            BuyerCompany           @relation(fields: [buyerCompanyId], references: [id])
-  styleName               String                 // "Men's crew neck tee, navy"
-  styleCode               String                 @default("STY-101")
-  fabricDescription       String                 @default("100% Combed Cotton Single Jersey 180 GSM")
-  totalQuantity           Int                    // 12000
-  orderValueInr           Float                  @default(2100000.0) // ₹21 Lakh average
-  exFactoryDate           DateTime               // Target completion date
-  originalExFactoryDate   DateTime
-  shipWeek                String                 // e.g. "2026-W47"
-  unitId                  String
-  unit                    Unit                   @relation(fields: [unitId], references: [id])
-  currentStage            String                 // "Knitting", "Stitching", "Finishing", etc.
-  currentStageQuantity    Int                    @default(0) // Quantity completed in current stage
-  statusColor             String                 @default("GREEN") // "GREEN" | "AMBER" | "RED"
-  runRateDeficit          Float                  @default(0.0) // Shortfall/surplus in pcs/day
-  piecesNeededPerDay      Float                  @default(0.0)
-  piecesMadePerDay        Float                  @default(0.0)
-  projectedDelayDays      Int                    @default(0)
-  projectedCompletionDate DateTime?
-  airFreightRiskAmount    Float                  @default(0.0) // Potential ₹3.5L penalty
-  delayDiscountRiskAmount Float                  @default(0.0) // Potential 5% discount (₹1.05L)
-  notes                   String?
-  milestones              TnaMilestone[]
-  sizeBreakdowns          OrderItemBreakdown[]
-  productionLogs          DailyProductionLog[]
-  dateAudits              DateChangeAudit[]
-  notifications           BuyerNotification[]
-  createdAt               DateTime               @default(now())
-  updatedAt               DateTime               @updatedAt
+  id                    String      @id @default(cuid())
+  orderId               String      @unique // e.g. "ORD-W-204118", "ORD-M-88120", "ORD-W-204377"
+  channel               String      // "Website", "Marketplace 1", "Marketplace 2", "Marketplace 3", "Quick-Commerce 1", "Quick-Commerce 2"
+  orderDate             DateTime
+  itemDescription       String      @default("300TC Cotton Bed Linen King")
+  sku                   String      @default("BED-300TC-KING-01")
+  orderValue            Float       // Gross order value (e.g. 1499, 1199, 2398)
+  paymentMode           String      // "COD" | "Prepaid"
+  deliveryStatus        String      // "Delivered" | "Returned to warehouse" | "In transit" | "RTO initiated" | "Lost in transit"
+  courierPartner        String      @default("Shiprocket") // "Shiprocket" | "Delhivery"
+  awbNumber             String      @default("AWB-98218731")
+  physicalWeightKg      Float       @default(0.85) // Catalog / true physical weight
+  billedWeightKg        Float       @default(0.85) // Courier freight billed weight
+  expectedReceived      Float       // Computed by rate cards
+  actualReceived        Float       // Received from settlements/COD remittance
+  difference            Float       // actualReceived - expectedReceived
+  reconciliationStatus  String      // "Settled" | "Short-paid" | "Unpaid past due" | "Freight overcharged" | "Return not received"
+  leakageAmount         Float       @default(0.0)
+  leakageReason         String      @default("None")
+  tcsDeducted           Float       @default(0.0) // GST TCS 1%
+  tdsDeducted           Float       @default(0.0) // Income Tax TDS 0.1% or 1%
+  commissionDeducted    Float       @default(0.0)
+  freightDeducted       Float       @default(0.0)
+  codFeeDeducted        Float       @default(0.0)
+  customerName          String      @default("Ananya Sharma")
+  customerPhone         String      @default("+91 98450 12891")
+  customerAddress       String      @default("42, 12th Main, Indiranagar, Bengaluru 560038")
+  city                  String      @default("Bengaluru")
+  zone                  String      @default("Metro") // "Local", "Regional", "Metro", "National"
+  warehouseScanDate     DateTime?
+  daysSinceDelivery     Int         @default(0)
+  claimId               String?
+  claimStatus           String      @default("None") // "None" | "Draft" | "Submitted" | "Under Review" | "Recovered" | "Rejected"
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
 }
 
-model OrderItemBreakdown {
-  id           String @id @default(cuid())
-  orderId      String
-  order        Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  color        String
-  size         String
-  plannedQty   Int
-  completedQty Int    @default(0)
+model RateCard {
+  id                    String      @id @default(cuid())
+  type                  String      // "CHANNEL" | "COURIER"
+  name                  String      // e.g. "Website", "Marketplace 1", "Shiprocket", "Delhivery"
+  commissionPercent     Float       @default(0.0)
+  fixedClosingFee       Float       @default(0.0)
+  paymentGatewayPercent Float       @default(0.0)
+  baseWeightGrams       Int         @default(500)
+  baseRateLocal         Float       @default(38.0)
+  baseRateRegional      Float       @default(48.0)
+  baseRateMetro         Float       @default(62.0)
+  baseRateNational      Float       @default(78.0)
+  extraSlabRate         Float       @default(35.0) // Per 500g extra
+  codFixedFee           Float       @default(35.0)
+  codPercentFee         Float       @default(1.5)
+  rtoChargePercent      Float       @default(100.0)
+  tcsPercent            Float       @default(1.0)
+  tdsPercent            Float       @default(0.1)
+  isActive              Boolean     @default(true)
+  updatedAt             DateTime    @updatedAt
 }
 
-model TnaMilestone {
-  id               String    @id @default(cuid())
-  orderId          String
-  order            Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  sequenceOrder    Int
-  stageName        String    // "Yarn Procurement", "Knitting", "Dyeing", "Cutting", "Printing", "Stitching", "Finishing", "Packing", "Final Inspection"
-  plannedStartDate DateTime
-  plannedEndDate   DateTime
-  actualStartDate  DateTime?
-  actualEndDate    DateTime?
-  targetQty        Int
-  completedQty     Int       @default(0)
-  status           String    @default("PENDING") // "PENDING" | "IN_PROGRESS" | "COMPLETED" | "DELAYED"
-  notes            String?
+model ColumnMapping {
+  id                    String      @id @default(cuid())
+  sourceType            String      // "ORDER_MASTER", "SETTLEMENT", "COD_REMITTANCE", "FREIGHT_INVOICE", "WAREHOUSE_SCAN"
+  partnerName           String      // "Website", "Marketplace 1", "Marketplace 2", "Shiprocket", "Delhivery", etc.
+  version               Int         @default(1)
+  mappings              String      // JSON string of { targetField: sourceHeader }
+  sampleData            String?     // JSON string of preview rows
+  isApproved            Boolean     @default(false)
+  approvedBy            String?
+  approvedAt            DateTime?
+  versionHistory        String?     // JSON array of prior versions for rollback
+  createdAt             DateTime    @default(now())
 }
 
-model DailyProductionLog {
-  id                           String   @id @default(cuid())
-  orderId                      String
-  order                        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  unitId                       String
-  unit                         Unit     @relation(fields: [unitId], references: [id])
-  supervisorId                 String
-  supervisor                   User     @relation(fields: [supervisorId], references: [id])
-  date                         DateTime @default(now())
-  stage                        String
-  quantityProduced             Int
-  rejectedQuantity             Int      @default(0)
-  photoUrl                     String?
-  originalTamilNote            String?
-  voiceAudioUrl                String?
-  aiEnglishTranslation        String?
-  aiReasonCategory             String?  // "Machine Breakdown", "Needle Shortage", "Fabric Defect", "Power Outage", etc.
-  aiConfidence                 Float?   @default(0.92)
-  merchandiserConfirmed        Boolean  @default(false) // Buyer sees only after confirmation
-  merchandiserOverrideCategory String?
-  merchandiserComments         String?
-  syncStatus                   String   @default("SYNCED") // "SYNCED" | "QUEUED_OFFLINE"
-  createdAt                    DateTime @default(now())
+model AIReviewQueueItem {
+  id                    String      @id @default(cuid())
+  partner               String
+  rawPaymentRef         String
+  rawAwb                String
+  rawAmount             Float
+  transactionDate       DateTime
+  suggestedOrderId      String
+  confidenceScore       Float
+  matchReasons          String      // JSON array of signals
+  status                String      @default("PENDING") // "PENDING", "ACCEPTED", "REJECTED", "MANUALLY_LINKED"
+  reviewedBy            String?
+  reviewedAt            DateTime?
+  auditNote             String?
+  createdAt             DateTime    @default(now())
 }
 
-model DateChangeAudit {
-  id                 String   @id @default(cuid())
-  orderId            String
-  order              Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  changedById        String
-  changedBy          User     @relation(fields: [changedById], references: [id])
-  oldExFactoryDate   DateTime
-  newExFactoryDate   DateTime
-  daysDifference     Int
-  formalReason       String
-  buyerNotified      Boolean  @default(false)
-  createdAt          DateTime @default(now())
+model Claim {
+  id                    String      @id @default(cuid())
+  claimNumber           String      @unique // e.g. "CLM-2026-1041"
+  partner               String      // "Shiprocket", "Marketplace 1", "Delhivery", etc.
+  orderId               String
+  awbNumber             String
+  discrepancyType       String      // "UNREMITTED_COD", "COMMISSION_OVERCHARGE", "WEIGHT_SLAB_ERROR", "LOST_RETURN"
+  disputedAmount        Float
+  status                String      @default("DRAFT") // "DRAFT", "SUBMITTED", "UNDER_REVIEW", "RECOVERED", "REJECTED"
+  evidenceDossier       String      // JSON string detailing the discrepancy proof
+  recoveryDate          DateTime?
+  settlementUtr         String?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
 }
 
-model BuyerNotification {
-  id            String       @id @default(cuid())
-  orderId       String
-  order         Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  buyerCompanyId String
-  buyerCompany  BuyerCompany @relation(fields: [buyerCompanyId], references: [id])
-  title         String
-  message       String
-  severity      String       @default("INFO") // "INFO" | "WARNING" | "CRITICAL"
-  isRead        Boolean      @default(false)
-  confirmedAt   DateTime     @default(now())
+model AuditLog {
+  id                    String      @id @default(cuid())
+  userId                String      @default("usr_exec")
+  userName              String      @default("Priya Nair (Finance Executive)")
+  action                String
+  details               String
+  timestamp             DateTime    @default(now())
 }

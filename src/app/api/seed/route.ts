@@ -1,14 +1,22 @@
+// src/app/api/seed/route.ts
 import { NextResponse } from 'next/server';
-import { resetDatabase } from '@/lib/db';
+import { store } from '@/lib/store';
 
 export async function POST() {
   try {
-    const result = await resetDatabase();
-    return NextResponse.json({ success: true, ...result });
-  } catch (error: any) {
-    return NextResponse.json(
-      { success: false, error: error.message || 'Seed failed' },
-      { status: 500 }
-    );
+    store.resetToDefaults();
+    return NextResponse.json({
+      success: true,
+      message: 'Reconciliation database reset to pristine sample data with brief reference orders (ORD-W-204118, ORD-M-88120, ORD-W-204377)',
+      totalOrders: store.getOrders().length,
+      totalClaims: store.getClaims().length,
+      currentUser: store.getCurrentUser(),
+    });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
+}
+
+export async function GET() {
+  return POST();
 }
